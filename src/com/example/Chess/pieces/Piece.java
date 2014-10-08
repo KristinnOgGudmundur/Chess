@@ -1,15 +1,19 @@
-package com.example.Chess.objects;
+package com.example.Chess.pieces;
+
+import com.example.Chess.objects.Coordinate;
+import com.example.Chess.objects.GameState;
+import com.example.Chess.objects.MoveOption;
+import com.example.Chess.objects.Player;
 
 import java.util.List;
 
-/**
- * Created by Gvendur Stefáns on 8.10.2014.
- */
-public class Piece {
+
+public abstract class Piece {
 	private Player player;
 	private Coordinate position;
 	private boolean hasMoved = false;
 	private GameState gameState;
+
 
 	public Piece(Player player, Coordinate position){
 		this.player = player;
