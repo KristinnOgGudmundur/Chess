@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  android:orientation="vertical"
+			  android:layout_width="fill_parent"
+			  android:layout_height="fill_parent"
+		>
+	<Button android:id="@+id/button_play"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/buttonPlay"
+			android:onClick="buttonClick"/>
+	<Button android:id="@+id/button_options"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/buttonOptions"
+			android:onClick="buttonClick"/>
+</LinearLayout>
+
