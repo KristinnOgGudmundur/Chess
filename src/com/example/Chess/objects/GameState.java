@@ -78,7 +78,7 @@ public class GameState {
 
 	public Piece getPiece(Coordinate position){
 		for(Piece p : pieces){
-			if(p.getPosition == position){
+			if(p.getPosition() == position){
 				return p;
 			}
 		}
