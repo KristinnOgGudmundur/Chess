@@ -77,6 +77,11 @@ public class GameState {
 	//endregion Getters
 
 	public Piece getPiece(Coordinate position){
+		for(Piece p : pieces){
+			if(p.getPosition == position){
+				return p;
+			}
+		}
 		return null;
 	}
 

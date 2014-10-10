@@ -21,6 +21,10 @@ public abstract class Piece {
 		this.gameState = GameState.getInstance();
 	}
 
+	public Coordinate getPosition(){
+		return this.position;
+	}
+
 	public List<MoveOption> getMoveOptions(){
 		return null;
 	}
