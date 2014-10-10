@@ -36,6 +36,6 @@ public abstract class Piece {
 
 	@Override
 	public String toString(){
-		return String.format("Player: {0}, position: {1}", player, position);
+		return String.format("Player: %s, position: %s", player, position);
 	}
 }

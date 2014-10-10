@@ -58,6 +58,6 @@ public class Coordinate {
 
 	@Override
 	public String toString(){
-		return numberToChar(col) + row;
+		return String.format("%s%s", numberToChar(col), row);
 	}
 }
