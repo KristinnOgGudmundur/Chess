@@ -32,4 +32,10 @@ public abstract class Piece {
 	public void setPosition(Coordinate position){
 		this.position = position;
 	}
+
+
+	@Override
+	public String toString(){
+		return String.format("Player: {0}, position: {1}", player, position);
+	}
 }

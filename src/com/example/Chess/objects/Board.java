@@ -9,6 +9,7 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import com.example.Chess.pieces.Piece;
 
 public class Board extends View {
 	//region Properties
@@ -19,12 +20,14 @@ public class Board extends View {
 	private Paint m_paintGrid = new Paint();
 	private Rect drawRect = new Rect();
 	private int minSizeForNumbers = 800;
+	private GameState gameState;
 
 	//endregion Properties
 
 	public Board(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		setBackgroundColor(0);
+		gameState = GameState.getInstance();
 	}
 
 
@@ -118,7 +121,10 @@ public class Board extends View {
 		System.out.println("x: " + x + ", y: " + y);
 		Coordinate c = getCoordinate(x, y);
 		if (c != null) {
-			System.out.println(c);
+			Piece thePiece = gameState.getPiece(c);
+			if(thePiece != null) {
+				System.out.println(thePiece);
+			}
 		}
 	}
 
