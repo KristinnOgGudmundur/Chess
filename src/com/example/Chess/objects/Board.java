@@ -2,10 +2,7 @@ package com.example.Chess.objects;
 
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
+import android.graphics.*;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,11 +14,14 @@ public class Board extends View {
 	private int m_cellSize;
 	private int m_numberPadding;
 	private int m_numberPaddingFactor = 20;
+	private int m_highlightFactor = 8;
 	private Paint m_paintGrid = new Paint();
 	private Rect drawRect = new Rect();
 	private Paint m_paintPieces = new Paint();
+	private Paint m_paintHighlightCell = new Paint();
 	private int minSizeForNumbers = 800;
 	private GameState gameState;
+
 
 	//endregion Properties
 
@@ -69,7 +69,6 @@ public class Board extends View {
 
 			Coordinate pos = p.getPosition();
 			CellBounds bounds = getCellBounds(pos);
-			//canvas.drawText(p.getString(), getCellMin(pos.getCol()) - (m_cellSize * 0.5f), getCellMin(pos.getRow()) - (m_cellSize * 0.25f), m_paintPieces);
 			canvas.drawText(p.getString(), bounds.getLeft() + m_cellSize * 0.5f, bounds.getBottom() - m_cellSize * 0.4f, m_paintPieces);
 		}
 
@@ -109,6 +108,7 @@ public class Board extends View {
 
 		m_cellSize = (size - 2 * largestPadding - 2 * m_numberPadding) / NUM_CELLS;
 		m_paintPieces.setTextSize(m_cellSize * 0.5f);
+		m_paintHighlightCell.setStrokeWidth(m_cellSize / m_highlightFactor);
 		System.out.println("CellSize: " + m_cellSize + ", NumberPadding: " + m_numberPadding);
 	}
 
@@ -186,5 +186,35 @@ public class Board extends View {
 
 	private CellBounds getCellBounds(Coordinate c){
 		return new CellBounds(c, m_numberPadding, m_cellSize);
+	}
+
+	private void highlightCell(Canvas canvas, Coordinate cell, int color){
+		CellBounds theBounds = getCellBounds(cell);
+
+		m_paintHighlightCell.setColor(color);
+		m_paintHighlightCell.setStyle(Paint.Style.STROKE);
+		Path thePath = new Path();
+		float offset = m_paintHighlightCell.getStrokeWidth() / 2;
+		thePath.moveTo(theBounds.getLeft() + offset, theBounds.getBottom() - offset);
+		thePath.lineTo(theBounds.getLeft() + offset, theBounds.getTop() + offset);
+		thePath.lineTo(theBounds.getRight() - offset, theBounds.getTop() + offset);
+		thePath.lineTo(theBounds.getRight() - offset, theBounds.getBottom() - offset);
+		thePath.lineTo(theBounds.getLeft(), theBounds.getBottom() - offset);
+		canvas.drawPath(thePath, m_paintHighlightCell);
+	}
+
+
+	private void fillCell(Canvas canvas, Coordinate cell, int color){
+		CellBounds theBounds = getCellBounds(cell);
+
+		m_paintHighlightCell.setColor(color);
+		m_paintHighlightCell.setStyle(Paint.Style.FILL);
+		Path thePath = new Path();
+		thePath.moveTo(theBounds.getLeft(), theBounds.getBottom());
+		thePath.lineTo(theBounds.getLeft(), theBounds.getTop());
+		thePath.lineTo(theBounds.getRight(), theBounds.getTop());
+		thePath.lineTo(theBounds.getRight(), theBounds.getBottom());
+		thePath.lineTo(theBounds.getLeft(), theBounds.getBottom());
+		canvas.drawPath(thePath, m_paintHighlightCell);
 	}
 }
