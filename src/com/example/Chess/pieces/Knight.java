@@ -9,4 +9,9 @@ public class Knight extends Piece {
 	public Knight(Player player, Coordinate position){
 		super(player, position);
 	}
+
+	@Override
+	public String getString() {
+		return "C";
+	}
 }

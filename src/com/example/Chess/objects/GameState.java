@@ -41,23 +41,23 @@ public class GameState {
 
 
 		//Add pieces for black
-		instance.pieces.add(new Rook(Player.PLAYER2, new Coordinate(1,7)));
-		instance.pieces.add(new Knight(Player.PLAYER2, new Coordinate(2,7)));
-		instance.pieces.add(new Bishop(Player.PLAYER2, new Coordinate(3,7)));
-		instance.pieces.add(new Queen(Player.PLAYER2, new Coordinate(4,7)));
-		instance.pieces.add(new King(Player.PLAYER2, new Coordinate(5,7)));
-		instance.pieces.add(new Bishop(Player.PLAYER2, new Coordinate(6,7)));
-		instance.pieces.add(new Knight(Player.PLAYER2, new Coordinate(7,7)));
-		instance.pieces.add(new Rook(Player.PLAYER2, new Coordinate(8,7)));
+		instance.pieces.add(new Rook(Player.PLAYER2, new Coordinate(1,8)));
+		instance.pieces.add(new Knight(Player.PLAYER2, new Coordinate(2,8)));
+		instance.pieces.add(new Bishop(Player.PLAYER2, new Coordinate(3,8)));
+		instance.pieces.add(new Queen(Player.PLAYER2, new Coordinate(4,8)));
+		instance.pieces.add(new King(Player.PLAYER2, new Coordinate(5,8)));
+		instance.pieces.add(new Bishop(Player.PLAYER2, new Coordinate(6,8)));
+		instance.pieces.add(new Knight(Player.PLAYER2, new Coordinate(7,8)));
+		instance.pieces.add(new Rook(Player.PLAYER2, new Coordinate(8,8)));
 
-		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(1,8)));
-		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(2,8)));
-		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(3,8)));
-		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(4,8)));
-		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(5,8)));
-		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(6,8)));
-		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(7,8)));
-		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(8,8)));
+		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(1,7)));
+		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(2,7)));
+		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(3,7)));
+		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(4,7)));
+		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(5,7)));
+		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(6,7)));
+		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(7,7)));
+		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(8,7)));
 
 		instance.gameStatus = GameStatus.TURN_PLAYER1;
 	}

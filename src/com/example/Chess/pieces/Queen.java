@@ -9,4 +9,9 @@ public class Queen extends Piece {
 	public Queen(Player player, Coordinate position){
 		super(player, position);
 	}
+
+	@Override
+	public String getString() {
+		return "Q";
+	}
 }

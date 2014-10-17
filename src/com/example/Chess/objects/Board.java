@@ -19,6 +19,7 @@ public class Board extends View {
 	private int m_numberPaddingFactor = 20;
 	private Paint m_paintGrid = new Paint();
 	private Rect drawRect = new Rect();
+	private Paint m_paintPieces = new Paint();
 	private int minSizeForNumbers = 800;
 	private GameState gameState;
 
@@ -28,6 +29,10 @@ public class Board extends View {
 		super(context, attrs);
 		setBackgroundColor(0);
 		gameState = GameState.getInstance();
+
+		m_paintPieces.setStyle(Paint.Style.FILL);
+		m_paintPieces.setStrokeWidth(4);
+		m_paintPieces.setTextAlign(Paint.Align.CENTER);
 	}
 
 
@@ -41,10 +46,10 @@ public class Board extends View {
 		//Draw the squares
 		for(int x = 0; x < NUM_CELLS; x++){
 			for(int y = 0; y < NUM_CELLS; y++){
-				left = m_numberPadding + x * m_cellSize;
-				top = m_numberPadding + y * m_cellSize;
-				right = left + m_cellSize;
-				bottom = top + m_cellSize;
+				left = (int)getCellMin(x);
+				top = (int)getCellMin(y);
+				right = (int)getCellMax(x);
+				bottom = (int)getCellMax(y);
 				drawRect.set(left, top, right, bottom);
 				if((((x & 1) ^ 1) ^ (y & 1)) == 1){
 					m_paintGrid.setColor(Color.WHITE);
@@ -56,7 +61,23 @@ public class Board extends View {
 			}
 		}
 
+
+		//Draw the pieces
+		for(Piece p : gameState.getPieces()){
+			if(p.getPlayer() == Player.PLAYER1){
+				m_paintPieces.setColor(Color.BLUE);
+			}
+			else{
+				m_paintPieces.setColor(Color.RED);
+			}
+
+			Coordinate pos = p.getPosition();
+			canvas.drawText(p.getString(), getCellMin(pos.getCol()) - (m_cellSize * 0.5f), getCellMin(pos.getRow()) - (m_cellSize * 0.25f), m_paintPieces);
+		}
+
+
 		//Draw the edge of the board for clarity
+		//If there is enough space
 	}
 
 
@@ -89,6 +110,7 @@ public class Board extends View {
 		}
 
 		m_cellSize = (size - 2 * largestPadding - 2 * m_numberPadding) / NUM_CELLS;
+		m_paintPieces.setTextSize(m_cellSize * 0.5f);
 		System.out.println("CellSize: " + m_cellSize + ", NumberPadding: " + m_numberPadding);
 	}
 
@@ -159,5 +181,13 @@ public class Board extends View {
 		r = r / m_cellSize;
 
 		return new Coordinate(c + 1, 8 - r);
+	}
+
+	private float getCellMin(int column){
+		return m_numberPadding + m_cellSize * column;
+	}
+
+	private float getCellMax(int row){
+		return m_numberPadding + m_cellSize * (row + 1);
 	}
 }

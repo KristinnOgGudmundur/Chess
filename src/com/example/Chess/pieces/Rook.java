@@ -9,4 +9,9 @@ public class Rook extends Piece {
 	public Rook(Player player, Coordinate position){
 		super(player, position);
 	}
+
+	@Override
+	public String getString() {
+		return "R";
+	}
 }

@@ -33,6 +33,11 @@ public abstract class Piece {
 		this.position = position;
 	}
 
+	public Player getPlayer(){
+		return this.player;
+	}
+
+	public abstract String getString();
 
 	@Override
 	public String toString(){
