@@ -39,19 +39,15 @@ public class Board extends View {
 	@Override
 	protected void onDraw(Canvas canvas){
 		System.out.println("onDraw");
-		int left;
-		int right;
-		int top;
-		int bottom;
+		CellBounds temp;
+
 		//Draw the squares
-		for(int x = 0; x < NUM_CELLS; x++){
-			for(int y = 0; y < NUM_CELLS; y++){
-				left = (int)getCellMin(x);
-				top = (int)getCellMin(y);
-				right = (int)getCellMax(x);
-				bottom = (int)getCellMax(y);
-				drawRect.set(left, top, right, bottom);
-				if((((x & 1) ^ 1) ^ (y & 1)) == 1){
+		for(int x = 1; x < NUM_CELLS + 1; x++){
+			for(int y = 1; y < NUM_CELLS + 1; y++){
+				temp = getCellBounds(new Coordinate(x, y));
+
+				drawRect.set((int)temp.getLeft(),(int)temp.getTop(),(int)temp.getRight(),(int)temp.getBottom());
+				if((((x & 1) ^ 1) ^ (y & 1)) != 1){
 					m_paintGrid.setColor(Color.WHITE);
 				}
 				else{
@@ -72,7 +68,9 @@ public class Board extends View {
 			}
 
 			Coordinate pos = p.getPosition();
-			canvas.drawText(p.getString(), getCellMin(pos.getCol()) - (m_cellSize * 0.5f), getCellMin(pos.getRow()) - (m_cellSize * 0.25f), m_paintPieces);
+			CellBounds bounds = getCellBounds(pos);
+			//canvas.drawText(p.getString(), getCellMin(pos.getCol()) - (m_cellSize * 0.5f), getCellMin(pos.getRow()) - (m_cellSize * 0.25f), m_paintPieces);
+			canvas.drawText(p.getString(), bounds.getLeft() + m_cellSize * 0.5f, bounds.getBottom() - m_cellSize * 0.4f, m_paintPieces);
 		}
 
 
@@ -148,6 +146,8 @@ public class Board extends View {
 				System.out.println(thePiece);
 			}
 		}
+
+		System.out.println(getCellBounds(c));
 	}
 
 	/**
@@ -183,11 +183,8 @@ public class Board extends View {
 		return new Coordinate(c + 1, 8 - r);
 	}
 
-	private float getCellMin(int column){
-		return m_numberPadding + m_cellSize * column;
-	}
 
-	private float getCellMax(int row){
-		return m_numberPadding + m_cellSize * (row + 1);
+	private CellBounds getCellBounds(Coordinate c){
+		return new CellBounds(c, m_numberPadding, m_cellSize);
 	}
 }
