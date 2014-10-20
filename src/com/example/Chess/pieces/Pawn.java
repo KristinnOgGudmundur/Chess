@@ -26,7 +26,6 @@ public class Pawn extends Piece {
     //------------------------------------------------------------------------------------------------------------------
 
         int limit;
-        boolean blocked = false;
 
         if(!this.hasMoved)
         {
@@ -40,11 +39,11 @@ public class Pawn extends Piece {
             Piece otherPiece = gameState.getPiece(currentPosition);
             MoveStatus temp = getMoveStatusAt(currentPosition, this.player);
 
-            if(otherPiece == null && !blocked && temp != null)
+            if(otherPiece == null && temp != null)
             {
                 returnValue.add(new MoveOption(currentPosition, MoveStatus.CANMOVE));
             }
-            else{ blocked = true; }
+            else{ break; }
 
     //CheckAttackDiagonal
     //-----------------------------------------------------------------------------------------------------------------
