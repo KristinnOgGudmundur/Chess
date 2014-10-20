@@ -25,7 +25,7 @@ public class Coordinate {
 		if(lower > upper){
 			return this.isInRange(upper, lower);
 		}
-		return (col >= lower) && (row >= lower) && (col <= upper) && (col <= upper);
+		return (col >= lower) && (row >= lower) && (col <= upper) && (row <= upper);
 	}
 
 
