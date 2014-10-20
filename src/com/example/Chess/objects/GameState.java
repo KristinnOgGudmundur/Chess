@@ -156,6 +156,7 @@ public class GameState {
 	}
 
 	private GameStatus updateGameStatus(){
+		//TODO: Add all the missing GameStatuses
 		if(gameStatus == GameStatus.TURN_PLAYER1){
 			gameStatus = GameStatus.TURN_PLAYER2;
 		}
