@@ -22,6 +22,9 @@ public class Coordinate {
 
 
 	public boolean isInRange(int lower, int upper){
+		if(lower > upper){
+			return this.isInRange(upper, lower);
+		}
 		return (col >= lower) && (row >= lower) && (col <= upper) && (col <= upper);
 	}
 

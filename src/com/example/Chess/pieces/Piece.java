@@ -27,6 +27,27 @@ public abstract class Piece {
 		return new ArrayList<MoveOption>();
 	}
 
+	/**
+	 * Checks what if the given cell is empty, held by an enemy or held by a friend
+	 * NOTE: Does not check if the piece can actually move to that cell
+	 */
+	protected MoveStatus getMoveStatusAt(Coordinate coordinate, Player player){
+		if(coordinate.isInRange(1,8)){
+			Piece otherPiece = gameState.getPiece(coordinate);
+			if (otherPiece == null) {
+				return MoveStatus.CANMOVE;
+			}
+			else if (otherPiece.getPlayer() == this.player) {
+				return MoveStatus.PROTECTS;
+			}
+			else {
+				return MoveStatus.CANKILL;
+			}
+		}
+		return null;
+	}
+
+
 	public boolean isProtected(){
 		MoveOption protectsSelf = new MoveOption(this.position, MoveStatus.PROTECTS);
 		for(Piece p : gameState.getPieces()){
