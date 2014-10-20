@@ -1,9 +1,6 @@
 package com.example.Chess.pieces;
 
-import com.example.Chess.objects.Coordinate;
-import com.example.Chess.objects.GameState;
-import com.example.Chess.objects.MoveOption;
-import com.example.Chess.objects.Player;
+import com.example.Chess.objects.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +27,36 @@ public abstract class Piece {
 		return new ArrayList<MoveOption>();
 	}
 
+	/**
+	 * Checks what if the given cell is empty, held by an enemy or held by a friend
+	 * NOTE: Does not check if the piece can actually move to that cell
+	 */
+	protected MoveStatus getMoveStatusAt(Coordinate coordinate, Player player){
+		if(coordinate.isInRange(1,8)){
+			Piece otherPiece = gameState.getPiece(coordinate);
+			if (otherPiece == null) {
+				return MoveStatus.CANMOVE;
+			}
+			else if (otherPiece.getPlayer() == this.player) {
+				return MoveStatus.PROTECTS;
+			}
+			else {
+				return MoveStatus.CANKILL;
+			}
+		}
+		return null;
+	}
+
+
 	public boolean isProtected(){
-		//TODO: Implement
+		MoveOption protectsSelf = new MoveOption(this.position, MoveStatus.PROTECTS);
+		for(Piece p : gameState.getPieces()){
+			if(p.getPlayer() == player){
+				if(p.getMoveOptions().contains(protectsSelf)){
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 

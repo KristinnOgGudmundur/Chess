@@ -29,16 +29,17 @@ public class King extends Piece {
 			for(int y = pos.getCol() - 1; y < pos.getCol() + 1; y++){
 				if(x != pos.getCol() || y != pos.getRow()){
 					Coordinate currentPosition = new Coordinate(x, y);
-					Piece otherPiece = gameState.getPiece(currentPosition);
-					if(otherPiece == null){
-						returnValue.add(new MoveOption(currentPosition, MoveStatus.CANMOVE));
-					}
-					else if(otherPiece.getPlayer() == this.player){
-						returnValue.add(new MoveOption(currentPosition, MoveStatus.PROTECTS));
-					}
-					else{
-						//TODO: Don't allow moving if the piece is protected
-						returnValue.add(new MoveOption(currentPosition, MoveStatus.CANKILL));
+					MoveStatus temp = getMoveStatusAt(currentPosition, this.player);
+					if(temp != null){
+						if(temp == MoveStatus.CANKILL){
+							Piece otherPiece = gameState.getPiece(currentPosition);
+							if(!otherPiece.isProtected()){
+								returnValue.add(new MoveOption(currentPosition, temp));
+							}
+						}
+						else {
+							returnValue.add(new MoveOption(currentPosition, temp));
+						}
 					}
 				}
 			}

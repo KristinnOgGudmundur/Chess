@@ -90,6 +90,29 @@ public class GameState {
 		return null;
 	}
 
+	public boolean playerTurn(Player p){
+		boolean player1Turn;
+		switch (gameStatus){
+			case TURN_PLAYER1:
+			case CHECK_PLAYER1:
+				player1Turn = true;
+				break;
+			case TURN_PLAYER2:
+			case CHECK_PLAYER2:
+				player1Turn = false;
+				break;
+			default:
+				return false;
+		}
+
+		if(p == Player.PLAYER1){
+			return player1Turn;
+		}
+		else{
+			return !player1Turn;
+		}
+	}
+
 	public GameStatus movePiece(Coordinate start, Coordinate end){
 		return null;
 	}
