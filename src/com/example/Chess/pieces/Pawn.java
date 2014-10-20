@@ -55,7 +55,7 @@ public class Pawn extends Piece {
         for(int i = -1; i < 2; i = i + 2)
         {
             Coordinate currentPosition;
-            
+
             if(this.player == Player.PLAYER1)
             {
                 currentPosition = new Coordinate((pos.getCol() + i), (pos.getRow() + 1));

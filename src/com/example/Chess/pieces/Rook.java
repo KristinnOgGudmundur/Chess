@@ -14,55 +14,57 @@ public class Rook extends Piece {
 	public Rook(Player player, Coordinate position){
 		super(player, position);
 	}
-/*
+
     @Override
     public List<MoveOption> getMoveOptions()
     {
-        Coordinate pos = this.position;
         List<MoveOption> returnValue = new ArrayList<MoveOption>();
 
-        returnValue.addAll(check(1, 0, pos));
-        returnValue.addAll(check(0, 1, pos));
-        returnValue.addAll(check(-1, 0, pos));
-        returnValue.addAll(check(0, -1, pos));
+        returnValue.addAll(check(1, 0));
+        returnValue.addAll(check(0, 1));
+        returnValue.addAll(check(-1, 0));
+        returnValue.addAll(check(0, -1));
 
         return returnValue;
     }
 
-    private List<MoveOption> check(int colAdd, int rowAdd, Coordinate pos)
+    private List<MoveOption> check(int colAdd, int rowAdd)
     {
         List<MoveOption> returnValue = new ArrayList<MoveOption>();
-        boolean blocked = false;
-        int myColAdd = colAdd;
-        int myRowAdd = rowAdd;
 
-        for(int i = 0; i < 8; i++) {
-            myColAdd += colAdd;
-            myRowAdd += rowAdd;
+        boolean cont = true;
+        int iterations = 1;
+        do {
+            Coordinate tempCoordinate = new Coordinate(this.position.getCol() - (colAdd * iterations), this.position.getRow() - (rowAdd * iterations));
+            MoveStatus temp = getMoveStatusAt(tempCoordinate, this.player);
 
-            Coordinate currentPosition = new Coordinate(pos.getCol() + myColAdd, pos.getRow() + myRowAdd);
-            Piece otherPiece = gameState.getPiece(currentPosition);
-            MoveStatus temp = getMoveStatusAt(currentPosition, this.player);
+            if(temp != null){
+                switch(temp){
+                    case CANMOVE:
+                        returnValue.add(new MoveOption(tempCoordinate, temp));
+                        break;
+                    case CANKILL:
+                        returnValue.add(new MoveOption(tempCoordinate, temp));
+                        cont = false;
+                        break;
+                    case PROTECTS:
+                        returnValue.add(new MoveOption(tempCoordinate, temp));
+                        cont = false;
+                        break;
+                }
+            }
+            else
+            {
+                cont = false;
+            }
 
-            if (otherPiece == null && temp != null)
-            {
-                returnValue.add(new MoveOption(currentPosition, MoveStatus.CANMOVE));
-            }
-            else if (otherPiece.getPlayer() == this.player && temp != null)
-            {
-                returnValue.add(new MoveOption(currentPosition, MoveStatus.PROTECTS));
-                break;
-            }
-            else if (otherPiece.getPlayer() != this.player && temp != null)
-            {
-                returnValue.add(new MoveOption(currentPosition, MoveStatus.CANKILL));
-                break;
-            }
-        }
+            iterations++;
+
+        }while (cont);
 
         return returnValue;
     }
-*/
+
 	@Override
 	public String getString() {
 		return "R";
