@@ -37,8 +37,9 @@ public class King extends Piece {
 						returnValue.add(new MoveOption(currentPosition, MoveStatus.PROTECTS));
 					}
 					else{
-						//TODO: Don't allow moving if the piece is protected
-						returnValue.add(new MoveOption(currentPosition, MoveStatus.CANKILL));
+						if(!otherPiece.isProtected()) {
+							returnValue.add(new MoveOption(currentPosition, MoveStatus.CANKILL));
+						}
 					}
 				}
 			}

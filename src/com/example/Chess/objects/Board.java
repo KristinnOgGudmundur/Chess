@@ -190,8 +190,10 @@ public class Board extends View {
 		if (c != null) {
 			Piece thePiece = gameState.getPiece(c);
 			if(thePiece != null) {
-				currentPiece = thePiece;
-				currentMoveOptions = thePiece.getMoveOptions();
+				if(gameState.playerTurn(thePiece.getPlayer())) {
+					currentPiece = thePiece;
+					currentMoveOptions = thePiece.getMoveOptions();
+				}
 				System.out.println(thePiece);
 			}
 		}
