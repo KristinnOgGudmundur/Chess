@@ -11,4 +11,15 @@ public class MoveOption {
 		this.coordinate = coordinate;
 		this.moveStatus = status;
 	}
+
+	@Override
+	public boolean equals(Object other){
+		if(other.getClass() == MoveOption.class){
+			MoveOption temp = (MoveOption)other;
+			return (temp.coordinate.equals(this.coordinate) && temp.moveStatus == this.moveStatus);
+		}
+		else{
+			return false;
+		}
+	}
 }

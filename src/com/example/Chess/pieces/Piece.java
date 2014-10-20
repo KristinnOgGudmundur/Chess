@@ -1,9 +1,6 @@
 package com.example.Chess.pieces;
 
-import com.example.Chess.objects.Coordinate;
-import com.example.Chess.objects.GameState;
-import com.example.Chess.objects.MoveOption;
-import com.example.Chess.objects.Player;
+import com.example.Chess.objects.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +28,14 @@ public abstract class Piece {
 	}
 
 	public boolean isProtected(){
-		//TODO: Implement
+		MoveOption protectsSelf = new MoveOption(this.position, MoveStatus.PROTECTS);
+		for(Piece p : gameState.getPieces()){
+			if(p.getPlayer() == player){
+				if(p.getMoveOptions().contains(protectsSelf)){
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 
