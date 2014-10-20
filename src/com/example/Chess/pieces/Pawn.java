@@ -30,16 +30,17 @@ public class Pawn extends Piece {
 
         if(!this.hasMoved)
         {
-             limit = 1;
+             limit = 2;
         }
-        else{limit = 2;}
+        else{limit = 3;}
 
         for(int i = 1; i <= limit; i++)
         {
-            Coordinate currentPosition = new Coordinate(pos.getRow() + i, pos.getCol() + i);
+            Coordinate currentPosition = new Coordinate(pos.getCol(), pos.getRow() + i);
             Piece otherPiece = gameState.getPiece(currentPosition);
+            MoveStatus temp = getMoveStatusAt(currentPosition, this.player);
 
-            if(otherPiece == null && !blocked)
+            if(otherPiece == null && !blocked && temp != null)
             {
                 returnValue.add(new MoveOption(currentPosition, MoveStatus.CANMOVE));
             }
@@ -51,14 +52,20 @@ public class Pawn extends Piece {
         }
         for(int i = -1; i < 2; i = i + 2)
         {
-            Coordinate currentPosition = new Coordinate(pos.getRow() + i, pos.getCol() + 1);
+            Coordinate currentPosition = new Coordinate(pos.getCol() + i, pos.getRow() + 1);
             Piece otherPiece = gameState.getPiece(currentPosition);
+            MoveStatus temp = getMoveStatusAt(currentPosition, this.player);
 
-            if(otherPiece != null)
+            if(otherPiece != null && temp != null)
             {
                 returnValue.add(new MoveOption(currentPosition, MoveStatus.CANKILL));
             }
         }
+
+    //TODO: add framhjáhlaup
+    //------------------------------------------------------------------------------------------------------------------
+
+        return returnValue;
     }
 
 	@Override
