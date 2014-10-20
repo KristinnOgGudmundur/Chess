@@ -8,8 +8,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import com.example.Chess.pieces.Piece;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board extends View {
 	//region Properties
+	//region Drawing variables
 	private int NUM_CELLS = 8;
 	private int m_cellSize;
 	private int m_numberPadding;
@@ -20,7 +24,13 @@ public class Board extends View {
 	private Paint m_paintPieces = new Paint();
 	private Paint m_paintHighlightCell = new Paint();
 	private int minSizeForNumbers = 800;
+	//endregion Drawing variables
+
+	//region Game logic variables
 	private GameState gameState;
+	private Piece currentPiece = null;
+	private List<MoveOption> currentMoveOptions = new ArrayList<MoveOption>();
+	//endregion Game logic variables
 
 
 	//endregion Properties
@@ -57,8 +67,49 @@ public class Board extends View {
 			}
 		}
 
+		//Draw the edge of the board for clarity
+		//If there is enough space
 
-		//Draw the pieces
+
+		//Draw highlights
+		if(currentPiece != null){
+			for(MoveOption m : currentMoveOptions){
+				//Set the color
+				switch(m.moveStatus)
+				{
+					case CANMOVE:
+						fillCell(canvas, m.coordinate, Color.BLUE);
+						break;
+					case CANCASTLE:
+						fillCell(canvas, m.coordinate, Color.GREEN);
+						break;
+					case CANKILL:
+						highlightCell(canvas, m.coordinate, Color.RED);
+						break;
+					case PROTECTS:
+						highlightCell(canvas, m.coordinate, Color.BLUE);
+						break;
+				}
+
+				//Highlight the cell
+				switch(m.moveStatus)
+				{
+					case CANMOVE:
+					case CANCASTLE:
+
+						break;
+					case CANKILL:
+					case PROTECTS:
+
+						break;
+				}
+
+			}
+		}
+
+
+
+		// Draw the pieces
 		for(Piece p : gameState.getPieces()){
 			if(p.getPlayer() == Player.PLAYER1){
 				m_paintPieces.setColor(Color.BLUE);
@@ -71,10 +122,6 @@ public class Board extends View {
 			CellBounds bounds = getCellBounds(pos);
 			canvas.drawText(p.getString(), bounds.getLeft() + m_cellSize * 0.5f, bounds.getBottom() - m_cellSize * 0.4f, m_paintPieces);
 		}
-
-
-		//Draw the edge of the board for clarity
-		//If there is enough space
 	}
 
 
@@ -143,11 +190,11 @@ public class Board extends View {
 		if (c != null) {
 			Piece thePiece = gameState.getPiece(c);
 			if(thePiece != null) {
+				currentPiece = thePiece;
+				currentMoveOptions = thePiece.getMoveOptions();
 				System.out.println(thePiece);
 			}
 		}
-
-		System.out.println(getCellBounds(c));
 	}
 
 	/**

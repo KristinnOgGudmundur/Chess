@@ -6,4 +6,9 @@ package com.example.Chess.objects;
 public class MoveOption {
 	public Coordinate coordinate;
 	public MoveStatus moveStatus;
+
+	public MoveOption(Coordinate coordinate, MoveStatus status){
+		this.coordinate = coordinate;
+		this.moveStatus = status;
+	}
 }

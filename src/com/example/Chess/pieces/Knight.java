@@ -1,7 +1,10 @@
 package com.example.Chess.pieces;
 
 import com.example.Chess.objects.Coordinate;
+import com.example.Chess.objects.MoveOption;
 import com.example.Chess.objects.Player;
+
+import java.util.List;
 
 
 public class Knight extends Piece {

@@ -5,14 +5,15 @@ import com.example.Chess.objects.GameState;
 import com.example.Chess.objects.MoveOption;
 import com.example.Chess.objects.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public abstract class Piece {
-	private Player player;
-	private Coordinate position;
-	private boolean hasMoved = false;
-	private GameState gameState;
+	protected Player player;
+	protected Coordinate position;
+	protected boolean hasMoved = false;
+	protected GameState gameState;
 
 
 	public Piece(Player player, Coordinate position){
@@ -26,7 +27,12 @@ public abstract class Piece {
 	}
 
 	public List<MoveOption> getMoveOptions(){
-		return null;
+		return new ArrayList<MoveOption>();
+	}
+
+	public boolean isProtected(){
+		//TODO: Implement
+		return false;
 	}
 
 	public void setPosition(Coordinate position){
