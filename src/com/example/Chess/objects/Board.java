@@ -193,6 +193,7 @@ public class Board extends View {
 				if(gameState.playerTurn(thePiece.getPlayer())) {
 					currentPiece = thePiece;
 					currentMoveOptions = thePiece.getMoveOptions();
+					invalidate();
 				}
 				System.out.println(thePiece);
 			}
