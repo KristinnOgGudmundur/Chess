@@ -114,11 +114,49 @@ public class GameState {
 	}
 
 	public GameStatus movePiece(Coordinate start, Coordinate end){
+		Piece thePiece = getPiece(start);
+		System.out.println(String.format("Moving (%s) from %s to %s", thePiece, start, end));
+		List<MoveOption> moves = thePiece.getMoveOptions();
+
+
+		for(MoveOption m : moves){
+			if(m.coordinate.equals(end)){
+				switch(m.moveStatus){
+					case CANKILL:
+						killPiece(end);
+					case CANMOVE:
+						thePiece.setPosition(end);
+						return updateGameStatus();
+					case CANCASTLE:
+						//TODO: Implement
+						break;
+					case PROTECTS:
+						break;
+				}
+			}
+		}
+
+		System.out.println("Nothing was moved");
+		//Nothing was moved
 		return null;
 	}
 
 	private void killPiece(Coordinate position){
+		for(Piece p : pieces){
+			if(p.getPosition().equals(position)){
+				pieces.remove(p);
+			}
+		}
+	}
 
+	private GameStatus updateGameStatus(){
+		if(gameStatus == GameStatus.TURN_PLAYER1){
+			gameStatus = GameStatus.TURN_PLAYER2;
+		}
+		else{
+			gameStatus = GameStatus.TURN_PLAYER2;
+		}
+		return gameStatus;
 	}
 
 	public void reset(){

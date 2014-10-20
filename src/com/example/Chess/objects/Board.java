@@ -188,16 +188,38 @@ public class Board extends View {
 		System.out.println("x: " + x + ", y: " + y);
 		Coordinate c = getCoordinate(x, y);
 		if (c != null) {
+			GameStatus oldStatus = gameState.getGameStatus();
+			GameStatus currentStatus = oldStatus;
 			Piece thePiece = gameState.getPiece(c);
 			if(thePiece != null) {
+				System.out.println(thePiece);
 				if(gameState.playerTurn(thePiece.getPlayer())) {
+					//The user picked one of his own pieces
 					currentPiece = thePiece;
 					currentMoveOptions = thePiece.getMoveOptions();
-					invalidate();
 				}
-				System.out.println(thePiece);
+				else{
+					//The user picked one of his opponent's pieces
+					if(currentPiece != null){
+						currentStatus = gameState.movePiece(currentPiece.getPosition(), c);
+					}
+				}
+			}
+			else{
+				//The user picked an empty cell
+				if(currentPiece != null){
+					//Move the piece
+					currentStatus = gameState.movePiece(currentPiece.getPosition(), c);
+				}
+
+			}
+
+			if(oldStatus != currentStatus){
+				//A move was made
+				currentPiece = null;
 			}
 		}
+		invalidate();
 	}
 
 	/**
