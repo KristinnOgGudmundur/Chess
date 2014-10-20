@@ -25,8 +25,8 @@ public class King extends Piece {
 		Coordinate pos = this.position;
 		List<MoveOption> returnValue = new ArrayList<MoveOption>();
 
-		for(int x = pos.getCol() - 1; x < pos.getCol() + 1; x++){
-			for(int y = pos.getCol() - 1; y < pos.getCol() + 1; y++){
+		for(int x = pos.getCol() - 1; x <= pos.getCol() + 1; x++){
+			for(int y = pos.getRow() - 1; y <= pos.getRow() + 1; y++){
 				if(x != pos.getCol() || y != pos.getRow()){
 					Coordinate currentPosition = new Coordinate(x, y);
 					MoveStatus temp = getMoveStatusAt(currentPosition, this.player);
