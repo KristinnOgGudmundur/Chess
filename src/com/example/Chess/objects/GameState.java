@@ -142,10 +142,15 @@ public class GameState {
 	}
 
 	private void killPiece(Coordinate position){
+		int index = -1;
 		for(Piece p : pieces){
 			if(p.getPosition().equals(position)){
-				pieces.remove(p);
+				index = pieces.indexOf(p);
+				break;
 			}
+		}
+		if(index != -1){
+			pieces.remove(index);
 		}
 	}
 
@@ -154,7 +159,7 @@ public class GameState {
 			gameStatus = GameStatus.TURN_PLAYER2;
 		}
 		else{
-			gameStatus = GameStatus.TURN_PLAYER2;
+			gameStatus = GameStatus.TURN_PLAYER1;
 		}
 		return gameStatus;
 	}
