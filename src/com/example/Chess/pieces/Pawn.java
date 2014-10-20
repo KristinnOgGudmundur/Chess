@@ -27,31 +27,44 @@ public class Pawn extends Piece {
 
         int limit;
 
-        if(!this.hasMoved)
+        if(this.hasMoved)
         {
-             limit = 2;
+             limit = 1;
         }
-        else{limit = 3;}
-
+        else{limit = 2;}
+        boolean blocked = false;
         for(int i = 1; i <= limit; i++)
         {
-            Coordinate currentPosition = new Coordinate(pos.getCol(), pos.getRow() + i);
+            Coordinate currentPosition = new Coordinate(pos.getCol(),( this.player == Player.PLAYER1 ? pos.getRow() + i : pos.getRow() - i));
             Piece otherPiece = gameState.getPiece(currentPosition);
             MoveStatus temp = getMoveStatusAt(currentPosition, this.player);
 
             if(otherPiece == null && temp != null)
             {
-                returnValue.add(new MoveOption(currentPosition, MoveStatus.CANMOVE));
+                if(!blocked)
+                {
+                    returnValue.add(new MoveOption(currentPosition, MoveStatus.CANMOVE));
+                }
             }
-            else{ break; }
-
+            else{ blocked = true; }
+        }
     //CheckAttackDiagonal
     //-----------------------------------------------------------------------------------------------------------------
 
-        }
+
         for(int i = -1; i < 2; i = i + 2)
         {
-            Coordinate currentPosition = new Coordinate(pos.getCol() + i, pos.getRow() + 1);
+            Coordinate currentPosition;
+            
+            if(this.player == Player.PLAYER1)
+            {
+                currentPosition = new Coordinate((pos.getCol() + i), (pos.getRow() + 1));
+            }
+            else
+            {
+                currentPosition = new Coordinate((pos.getCol() - i), (pos.getRow() - 1));
+            }
+
             Piece otherPiece = gameState.getPiece(currentPosition);
             MoveStatus temp = getMoveStatusAt(currentPosition, this.player);
 
@@ -65,6 +78,12 @@ public class Pawn extends Piece {
     //------------------------------------------------------------------------------------------------------------------
 
         return returnValue;
+    }
+
+    @Override
+    public void setHasMoved(boolean hasMoved)
+    {
+        this.hasMoved = hasMoved;
     }
 
 	@Override

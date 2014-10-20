@@ -70,6 +70,7 @@ public abstract class Piece {
 
 	public abstract String getString();
 
+    public abstract void setHasMoved(boolean hasMoved);
 	@Override
 	public String toString(){
 		return String.format("Player: %s, position: %s", player, position);

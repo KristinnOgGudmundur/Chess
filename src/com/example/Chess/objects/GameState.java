@@ -125,6 +125,7 @@ public class GameState {
 					case CANKILL:
 						killPiece(end);
 					case CANMOVE:
+                        thePiece.setHasMoved(true);
 						thePiece.setPosition(end);
 						return updateGameStatus();
 					case CANCASTLE:

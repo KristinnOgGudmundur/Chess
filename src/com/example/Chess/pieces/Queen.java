@@ -14,4 +14,10 @@ public class Queen extends Piece {
 	public String getString() {
 		return "Q";
 	}
+
+    @Override
+    public void setHasMoved(boolean hasMoved)
+    {
+
+    }
 }

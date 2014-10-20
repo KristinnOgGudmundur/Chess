@@ -49,4 +49,10 @@ public class King extends Piece {
 
 		return returnValue;
 	}
+
+    @Override
+    public void setHasMoved(boolean hasMoved)
+    {
+        this.hasMoved = hasMoved;
+    }
 }

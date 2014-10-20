@@ -14,4 +14,9 @@ public class Bishop extends Piece {
 	public String getString() {
 		return "B";
 	}
+
+    @Override
+    public void setHasMoved(boolean hasMoved)
+    {
+    }
 }

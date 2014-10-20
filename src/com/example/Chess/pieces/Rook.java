@@ -67,4 +67,10 @@ public class Rook extends Piece {
 	public String getString() {
 		return "R";
 	}
+
+    @Override
+    public void setHasMoved(boolean hasMoved)
+    {
+        this.hasMoved = hasMoved;
+    }
 }

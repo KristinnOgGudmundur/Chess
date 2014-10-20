@@ -69,6 +69,11 @@ public class Knight extends Piece {
 		return returnValue;
 	}
 
+    @Override
+    public void setHasMoved(boolean hasMoved)
+    {
+    }
+
 	@Override
 	public String getString() {
 		return "C";
