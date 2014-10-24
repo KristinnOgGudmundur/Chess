@@ -45,7 +45,52 @@ public class King extends Piece {
 			}
 		}
 
-		//TODO: Add castling
+		if(!this.hasMoved)
+        {
+            boolean blocked = false;
+
+            for(int i = 1; i < 4; i++)
+            {
+                Coordinate currentPosition = new Coordinate(pos.getCol() + i, pos.getRow());
+                Piece otherPiece = gameState.getPiece(currentPosition);
+
+                if(otherPiece != null)
+                {
+
+                    if (otherPiece.getString() != "R") {
+                        blocked = true;
+                    }
+
+                    if (otherPiece.getString() == "R" && !(otherPiece.hasMoved) && (!blocked)) {
+                        Coordinate castlePosition = new Coordinate(currentPosition.getCol() - 1, currentPosition.getRow());
+                        returnValue.add(new MoveOption(castlePosition, MoveStatus.CANCASTLE));
+                    }
+                }
+
+            }
+
+            blocked = false;
+
+            for(int i = 1; i < 5; i++)
+            {
+                Coordinate currentPosition = new Coordinate(pos.getCol() - i, pos.getRow());
+                Piece otherPiece = gameState.getPiece(currentPosition);
+
+                if(otherPiece != null)
+                {
+                    if (otherPiece.getString() != "R") {
+                        blocked = true;
+                    }
+
+                    if (otherPiece.getString() == "R" && !(otherPiece.hasMoved) && (!blocked)) {
+                        Coordinate castlePosition = new Coordinate(currentPosition.getCol() + 2, currentPosition.getRow());
+                        returnValue.add(new MoveOption(castlePosition, MoveStatus.CANCASTLE));
+                    }
+                }
+
+            }
+
+        }
 
 		return returnValue;
 	}

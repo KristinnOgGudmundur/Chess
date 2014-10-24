@@ -129,8 +129,26 @@ public class GameState {
 						thePiece.setPosition(end);
 						return updateGameStatus();
 					case CANCASTLE:
-						//TODO: Implement
-						break;
+                        if(start.getCol() < end.getCol())
+                        {
+                            //castle right
+                            Coordinate rookPosition = new Coordinate((start.getCol() + 3), (start.getRow()));
+                            Piece rook = getPiece(rookPosition);
+                            rook.setHasMoved(true);
+                            Coordinate rookEndPosition = new Coordinate((start.getCol() + 1), (start.getRow()));
+                            rook.setPosition(rookEndPosition);
+
+                        }else
+                        {
+                            Coordinate rookPosition = new Coordinate((start.getCol() - 4), (start.getRow()));
+                            Piece rook = getPiece(rookPosition);
+                            rook.setHasMoved(true);
+                            Coordinate rookEndPosition = new Coordinate((start.getCol() - 1), (start.getRow()));
+                            rook.setPosition(rookEndPosition);
+                        }
+                        thePiece.setHasMoved(true);
+                        thePiece.setPosition(end);
+                        return updateGameStatus();
 					case PROTECTS:
 						break;
 				}
