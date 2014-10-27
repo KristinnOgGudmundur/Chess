@@ -125,8 +125,17 @@ public class GameState {
 					case CANKILL:
 						killPiece(end);
 					case CANMOVE:
+						if(thePiece instanceof Pawn){
+							if(!thePiece.getHasMoved()){
+								if(end.getRow() == 4 || end.getRow() == 5){
+									System.out.println("Moved two spaces");
+									((Pawn)thePiece).setMovedTwoSpacesLastTurn(true);
+								}
+							}
+						}
                         thePiece.setHasMoved(true);
 						thePiece.setPosition(end);
+
 						return updateGameStatus();
 					case CANCASTLE:
                         if(start.getCol() < end.getCol())
@@ -176,12 +185,24 @@ public class GameState {
 	private GameStatus updateGameStatus(){
 		//TODO: Add all the missing GameStatuses
 		if(gameStatus == GameStatus.TURN_PLAYER1){
+			resetPawnStatus(Player.PLAYER2);
 			gameStatus = GameStatus.TURN_PLAYER2;
 		}
 		else{
+			resetPawnStatus(Player.PLAYER1);
 			gameStatus = GameStatus.TURN_PLAYER1;
 		}
 		return gameStatus;
+	}
+
+	private void resetPawnStatus(Player player){
+		for(Piece p : pieces){
+			if(p.getPlayer() == player){
+				if(p instanceof Pawn){
+					((Pawn) p).setMovedTwoSpacesLastTurn(false);
+				}
+			}
+		}
 	}
 
 	public void reset(){

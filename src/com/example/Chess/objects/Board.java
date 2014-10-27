@@ -48,7 +48,6 @@ public class Board extends View {
 
 	@Override
 	protected void onDraw(Canvas canvas){
-		System.out.println("onDraw");
 		CellBounds temp;
 
 		//Draw the squares
@@ -128,7 +127,6 @@ public class Board extends View {
 	@Override
 	protected void onMeasure( int widthMeasureSpec, int heightMeasureSpec ) {
 		super.onMeasure( widthMeasureSpec, heightMeasureSpec );
-		System.out.println("onMeasure");
 		int width  = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();
 		int height = getMeasuredHeight() - getPaddingTop() - getPaddingBottom();
 		int size = Math.min(width, height);
@@ -141,7 +139,6 @@ public class Board extends View {
 
 	@Override
 	protected void onSizeChanged( int xNew, int yNew, int xOld, int yOld ) {
-		System.out.println("onSizeChanged");
 		int size = Math.min(xNew, yNew);
 		int largestPadding = Math.max(Math.max(getPaddingBottom(), getPaddingTop()), Math.max(getPaddingLeft(), getPaddingRight()));
 		if((size - 2 * largestPadding) >= minSizeForNumbers) {
@@ -156,7 +153,6 @@ public class Board extends View {
 		m_cellSize = (size - 2 * largestPadding - 2 * m_numberPadding) / NUM_CELLS;
 		m_paintPieces.setTextSize(m_cellSize * 0.5f);
 		m_paintHighlightCell.setStrokeWidth(m_cellSize / m_highlightFactor);
-		System.out.println("CellSize: " + m_cellSize + ", NumberPadding: " + m_numberPadding);
 	}
 
 
@@ -185,7 +181,6 @@ public class Board extends View {
 
 		int y = (int) event.getY();
 
-		System.out.println("x: " + x + ", y: " + y);
 		Coordinate c = getCoordinate(x, y);
 		if (c != null) {
 			GameStatus oldStatus = gameState.getGameStatus();
