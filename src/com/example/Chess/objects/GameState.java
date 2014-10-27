@@ -137,7 +137,13 @@ public class GameState {
 			if(m.coordinate.equals(end)){
 				switch(m.moveStatus){
 					case CANKILL:
-						killPiece(end);
+						boolean killed = killPiece(end);
+						if(killed == false){
+							//The piece is a pawn and it is killing another pawn en passant
+							System.out.println(String.format("Killing en passant at %s", new Coordinate(end.getCol(), start.getRow())));
+							killed = killPiece(new Coordinate(end.getCol(), start.getRow()));
+							System.out.println(String.format("Killed: %s", killed));
+						}
 					case CANMOVE:
 						if(thePiece instanceof Pawn){
 							if(!thePiece.getHasMoved()){
@@ -184,7 +190,8 @@ public class GameState {
 		return null;
 	}
 
-	private void killPiece(Coordinate position){
+	//Returns true if something was killed, false otherwise
+	private boolean killPiece(Coordinate position){
 		int index = -1;
 		for(Piece p : pieces){
 			if(p.getPosition().equals(position)){
@@ -194,7 +201,9 @@ public class GameState {
 		}
 		if(index != -1){
 			pieces.remove(index);
+			return true;
 		}
+		return false;
 	}
 
 	private GameStatus updateGameStatus(){
