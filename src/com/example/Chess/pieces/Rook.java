@@ -14,6 +14,8 @@ public class Rook extends Piece {
 	public Rook(Player player, Coordinate position){
 		super(player, position);
 	}
+    protected static int whiteImage = 11;
+    public static int blackImage = 12;
 
     @Override
     public List<MoveOption> getMoveOptions()
@@ -63,6 +65,16 @@ public class Rook extends Piece {
         }while (cont);
 
         return returnValue;
+    }
+
+    @Override
+    public int getWhiteImage(){
+        return whiteImage;
+    }
+
+    @Override
+    public int getBlackImage(){
+        return blackImage;
     }
 
 	@Override

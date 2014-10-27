@@ -14,7 +14,8 @@ public class Knight extends Piece {
 	public Knight(Player player, Coordinate position){
 		super(player, position);
 	}
-
+    protected static int whiteImage = 5;
+    public static int blackImage = 6;
 	@Override
 	public List<MoveOption> getMoveOptions(){
 		List<MoveOption> returnValue = new ArrayList<MoveOption>();
@@ -68,6 +69,16 @@ public class Knight extends Piece {
 
 		return returnValue;
 	}
+
+    @Override
+    public int getWhiteImage(){
+        return whiteImage;
+    }
+
+    @Override
+    public int getBlackImage(){
+        return blackImage;
+    }
 
     @Override
     public void setHasMoved(boolean hasMoved)

@@ -14,6 +14,8 @@ public class Queen extends Piece {
 	public Queen(Player player, Coordinate position){
 		super(player, position);
 	}
+    protected static int whiteImage = 9;
+    public static int blackImage = 10;
 
     public List<MoveOption> getMoveOptions()
     {
@@ -99,6 +101,16 @@ public class Queen extends Piece {
 
 
         return returnValue;
+    }
+
+    @Override
+    public int getWhiteImage(){
+        return whiteImage;
+    }
+
+    @Override
+    public int getBlackImage(){
+        return blackImage;
     }
 
 	@Override
