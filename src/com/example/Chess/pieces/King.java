@@ -14,8 +14,8 @@ public class King extends Piece {
 	public King(Player player, Coordinate position){
 		super(player, position);
 	}
-    protected static int whiteImage = 3;
-    public static int blackImage = 4;
+    protected static int whiteImage = 2130837507;
+    public static int blackImage = 2130837506;
     
 	@Override
 	public String getString() {

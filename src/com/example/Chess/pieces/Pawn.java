@@ -14,8 +14,8 @@ public class Pawn extends Piece {
 	public Pawn(Player player, Coordinate position){
 		super(player, position);
 	}
-    protected static int whiteImage = 7;
-    public static int blackImage = 8;
+    protected static int whiteImage = 2130837511;
+    public static int blackImage = 2130837510;
     protected boolean MovedTwoSpacesLastTurn;
     @Override
     public List<MoveOption> getMoveOptions()

@@ -14,8 +14,8 @@ public class Bishop extends Piece {
 	public Bishop(Player player, Coordinate position){
 		super(player, position);
 	}
-    protected static int whiteImage = 1;
-    public static int blackImage = 2;
+    protected static int whiteImage = 2130837505;
+    public static int blackImage = 2130837504;
 
 	@Override
 	public List<MoveOption> getMoveOptions(){

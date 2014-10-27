@@ -68,7 +68,7 @@ public class Board extends View {
 					m_paintGrid.setColor(Color.WHITE);
 				}
 				else{
-					m_paintGrid.setColor(Color.BLACK);
+					m_paintGrid.setColor(Color.GRAY);
 				}
 				canvas.drawRect(drawRect, m_paintGrid);
 			}
@@ -147,7 +147,7 @@ public class Board extends View {
 
 			Coordinate pos = p.getPosition();
 			CellBounds bounds = getCellBounds(pos);
-            /*
+
             this.mypaint=new Paint();
             //TODO fetch the right icons
             Bitmap bitmap;
@@ -169,8 +169,8 @@ public class Board extends View {
 
             //TODO make icons look better on all displays
             canvas.drawBitmap(scaledBitmap, bounds.getLeft() + m_cellSize * 0.05f, bounds.getBottom() - m_cellSize * 0.9f, mypaint);
-            */
-            canvas.drawText(p.getString(), bounds.getLeft() + m_cellSize * 0.5f, bounds.getBottom() - m_cellSize * 0.4f, m_paintPieces);
+
+            //canvas.drawText(p.getString(), bounds.getLeft() + m_cellSize * 0.5f, bounds.getBottom() - m_cellSize * 0.4f, m_paintPieces);
 		}
 	}
 
@@ -181,8 +181,8 @@ public class Board extends View {
 		int width  = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();
 		int height = getMeasuredHeight() - getPaddingTop() - getPaddingBottom();
 		int size = Math.min(width, height);
-		setMeasuredDimension( size + getPaddingLeft() + getPaddingRight(),
-				size + getPaddingTop() + getPaddingBottom() );
+		setMeasuredDimension(size + getPaddingLeft() + getPaddingRight(),
+                size + getPaddingTop() + getPaddingBottom());
 
 		System.out.println("Size: " + size);
 	}
