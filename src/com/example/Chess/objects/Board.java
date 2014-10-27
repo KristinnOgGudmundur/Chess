@@ -21,6 +21,7 @@ public class Board extends View {
 	private int m_highlightFactor = 8;
 	private Paint m_paintGrid = new Paint();
 	private Rect drawRect = new Rect();
+	private Paint m_paintLineNumbers = new Paint();
 	private Paint m_paintPieces = new Paint();
 	private Paint m_paintHighlightCell = new Paint();
 	private int minSizeForNumbers = 800;
@@ -43,6 +44,11 @@ public class Board extends View {
 		m_paintPieces.setStyle(Paint.Style.FILL);
 		m_paintPieces.setStrokeWidth(4);
 		m_paintPieces.setTextAlign(Paint.Align.CENTER);
+
+		m_paintLineNumbers.setStyle(Paint.Style.FILL);
+		m_paintLineNumbers.setStrokeWidth(4);
+		m_paintPieces.setTextAlign(Paint.Align.CENTER);
+		m_paintLineNumbers.setColor(Color.GRAY);
 	}
 
 
@@ -68,6 +74,26 @@ public class Board extends View {
 
 		//Draw the edge of the board for clarity
 		//If there is enough space
+		//Draw the left numbers
+		for(int i = 0; i < 8; i++){
+			canvas.drawText(String.format("%s", i + 1), m_numberPadding * 0.25f, m_numberPadding + m_paintLineNumbers.getTextSize() * 0.25f + m_cellSize * (i + 0.5f), m_paintLineNumbers);
+		}
+
+		//Draw the right numbers
+		for(int i = 0; i < 8; i++){
+			canvas.drawText(String.format("%s", i + 1), m_cellSize * 8 + m_numberPadding * 1.25f, m_numberPadding + m_paintLineNumbers.getTextSize() * 0.25f + m_cellSize * (i + 0.5f), m_paintLineNumbers);
+		}
+
+		//Draw the top letters
+		for(int i = 0; i < 8; i++){
+			canvas.drawText(numberToChar(i + 1), m_numberPadding + m_cellSize * (i + 0.5f) - m_paintLineNumbers.getTextSize() * 0.5f, m_numberPadding * 0.75f, m_paintLineNumbers);
+		}
+
+
+		//Draw the bottom letters
+		for(int i = 0; i < 8; i++){
+			canvas.drawText(numberToChar(i + 1), m_numberPadding + m_cellSize * (i + 0.5f) - m_paintLineNumbers.getTextSize() * 0.5f, canvas.getHeight() - m_paintLineNumbers.getTextSize() * 0.25f, m_paintLineNumbers);
+		}
 
 
 		//Draw highlights
@@ -153,6 +179,7 @@ public class Board extends View {
 		m_cellSize = (size - 2 * largestPadding - 2 * m_numberPadding) / NUM_CELLS;
 		m_paintPieces.setTextSize(m_cellSize * 0.5f);
 		m_paintHighlightCell.setStrokeWidth(m_cellSize / m_highlightFactor);
+		m_paintLineNumbers.setTextSize(m_numberPadding * 0.75f);
 	}
 
 
@@ -283,5 +310,29 @@ public class Board extends View {
 		thePath.lineTo(theBounds.getRight(), theBounds.getBottom());
 		thePath.lineTo(theBounds.getLeft(), theBounds.getBottom());
 		canvas.drawPath(thePath, m_paintHighlightCell);
+	}
+
+	private String numberToChar(int number){
+		switch(number){
+			case(1):
+				return "A";
+			case(2):
+				return "B";
+			case(3):
+				return "C";
+			case(4):
+				return "D";
+			case(5):
+				return "E";
+			case(6):
+				return "F";
+			case(7):
+				return "G";
+			case(8):
+				return "H";
+			default:
+				throw new RuntimeException("Illegal coordinate");
+		}
+
 	}
 }
