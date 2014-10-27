@@ -14,7 +14,9 @@ public class King extends Piece {
 	public King(Player player, Coordinate position){
 		super(player, position);
 	}
-
+    protected static int whiteImage = 3;
+    public static int blackImage = 4;
+    
 	@Override
 	public String getString() {
 		return "K";
@@ -101,6 +103,16 @@ public class King extends Piece {
 
 		return returnValue;
 	}
+
+    @Override
+    public int getWhiteImage(){
+        return whiteImage;
+    }
+
+    @Override
+    public int getBlackImage(){
+        return blackImage;
+    }
 
     @Override
     public void setHasMoved(boolean hasMoved)

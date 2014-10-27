@@ -14,6 +14,8 @@ public class Bishop extends Piece {
 	public Bishop(Player player, Coordinate position){
 		super(player, position);
 	}
+    protected static int whiteImage = 1;
+    public static int blackImage = 2;
 
 	@Override
 	public List<MoveOption> getMoveOptions(){
@@ -64,6 +66,16 @@ public class Bishop extends Piece {
 	public String getString() {
 		return "B";
 	}
+
+    @Override
+    public int getWhiteImage(){
+        return whiteImage;
+    }
+
+    @Override
+    public int getBlackImage(){
+        return blackImage;
+    }
 
     @Override
     public void setHasMoved(boolean hasMoved)

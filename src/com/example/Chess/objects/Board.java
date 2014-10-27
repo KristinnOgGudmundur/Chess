@@ -6,6 +6,7 @@ import android.graphics.*;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import com.example.Chess.R;
 import com.example.Chess.pieces.Piece;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class Board extends View {
 	private Paint m_paintPieces = new Paint();
 	private Paint m_paintHighlightCell = new Paint();
 	private int minSizeForNumbers = 800;
+    private Paint mypaint;
 	//endregion Drawing variables
 
 	//region Game logic variables
@@ -119,7 +121,30 @@ public class Board extends View {
 
 			Coordinate pos = p.getPosition();
 			CellBounds bounds = getCellBounds(pos);
-			canvas.drawText(p.getString(), bounds.getLeft() + m_cellSize * 0.5f, bounds.getBottom() - m_cellSize * 0.4f, m_paintPieces);
+            /*
+            this.mypaint=new Paint();
+            //TODO fetch the right icons
+            Bitmap bitmap;
+            if(p.getPlayer() == Player.PLAYER1)
+            {
+                bitmap=BitmapFactory.decodeResource(getResources(), p.getWhiteImage());
+            }else {
+                bitmap=BitmapFactory.decodeResource(getResources(), p.getBlackImage());
+            }
+
+            int id = R.drawable.ic_launcher;
+            System.out.println(id);
+            mypaint.setColor(Color.RED);
+            mypaint.setAntiAlias(true);
+            mypaint.setFilterBitmap(true);
+            mypaint.setDither(true);
+
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap,50,50, true);
+
+            //TODO make icons look better on all displays
+            canvas.drawBitmap(scaledBitmap, bounds.getLeft() + m_cellSize * 0.05f, bounds.getBottom() - m_cellSize * 0.9f, mypaint);
+            */
+            canvas.drawText(p.getString(), bounds.getLeft() + m_cellSize * 0.5f, bounds.getBottom() - m_cellSize * 0.4f, m_paintPieces);
 		}
 	}
 
