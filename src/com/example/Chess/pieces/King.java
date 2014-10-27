@@ -66,6 +66,10 @@ public class King extends Piece {
                         returnValue.add(new MoveOption(castlePosition, MoveStatus.CANCASTLE));
                     }
                 }
+                else if(gameState.getHotZones(this.player).contains(currentPosition))
+                {
+                    blocked = true;
+                }
 
             }
 
@@ -87,7 +91,10 @@ public class King extends Piece {
                         returnValue.add(new MoveOption(castlePosition, MoveStatus.CANCASTLE));
                     }
                 }
-
+                else if(gameState.getHotZones(this.player).contains(currentPosition))
+                {
+                    blocked = true;
+                }
             }
 
         }

@@ -51,7 +51,7 @@ public abstract class Piece {
 	public boolean isProtected(){
 		MoveOption protectsSelf = new MoveOption(this.position, MoveStatus.PROTECTS);
 		for(Piece p : gameState.getPieces()){
-			if(p.getPlayer() == player){
+			if(p.getPlayer() == player && p.getString() != "K"){
 				if(p.getMoveOptions().contains(protectsSelf)){
 					return true;
 				}

@@ -71,6 +71,20 @@ public class GameState {
 		return instance;
 	}
 
+    public List<Coordinate>getHotZones(Player player) {
+
+        List<Coordinate> hotZones = new ArrayList<Coordinate>();
+
+        for (Piece p : pieces) {
+            if (p.getPlayer() != player && p.getString() != "K") {
+                for (MoveOption m : p.getMoveOptions()) {
+                    hotZones.add(m.coordinate);
+                }
+            }
+        }
+        return hotZones;
+    }
+
 	//region Getters
 	public GameStatus getGameStatus() {
 		return gameStatus;
@@ -140,6 +154,7 @@ public class GameState {
 
                         }else
                         {
+                            //castle left
                             Coordinate rookPosition = new Coordinate((start.getCol() - 4), (start.getRow()));
                             Piece rook = getPiece(rookPosition);
                             rook.setHasMoved(true);
