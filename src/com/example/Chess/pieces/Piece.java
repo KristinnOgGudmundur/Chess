@@ -11,14 +11,14 @@ public abstract class Piece {
 	protected Coordinate position;
 	protected boolean hasMoved = false;
 	protected GameState gameState;
-    protected static int whiteImage;
-    protected static int blackImage;
+    protected int image;
 
 
-	public Piece(Player player, Coordinate position){
+	public Piece(Player player, Coordinate position, int image){
 		this.player = player;
 		this.position = position;
 		this.gameState = GameState.getInstance();
+        this.image = image;
 	}
 
 	public Coordinate getPosition(){
@@ -70,9 +70,7 @@ public abstract class Piece {
 		return this.player;
 	}
 
-    public abstract int getWhiteImage();
-
-    public abstract int getBlackImage();
+    public abstract int getImage();
 
 	public abstract String getString();
 

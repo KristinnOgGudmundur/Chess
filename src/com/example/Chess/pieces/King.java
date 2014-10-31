@@ -11,11 +11,9 @@ import java.util.List;
 
 public class King extends Piece {
 
-	public King(Player player, Coordinate position){
-		super(player, position);
+	public King(Player player, Coordinate position, int image){
+		super(player, position, image);
 	}
-    protected static int whiteImage = 2130837507;
-    public static int blackImage = 2130837506;
     
 	@Override
 	public String getString() {
@@ -105,13 +103,8 @@ public class King extends Piece {
 	}
 
     @Override
-    public int getWhiteImage(){
-        return whiteImage;
-    }
-
-    @Override
-    public int getBlackImage(){
-        return blackImage;
+    public int getImage(){
+        return image;
     }
 
     @Override

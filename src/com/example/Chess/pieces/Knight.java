@@ -11,11 +11,9 @@ import java.util.List;
 
 public class Knight extends Piece {
 
-	public Knight(Player player, Coordinate position){
-		super(player, position);
+	public Knight(Player player, Coordinate position, int image){
+		super(player, position, image);
 	}
-    protected static int whiteImage = 2130837509;
-    public static int blackImage = 2130837508;
 	@Override
 	public List<MoveOption> getMoveOptions(){
 		List<MoveOption> returnValue = new ArrayList<MoveOption>();
@@ -71,13 +69,8 @@ public class Knight extends Piece {
 	}
 
     @Override
-    public int getWhiteImage(){
-        return whiteImage;
-    }
-
-    @Override
-    public int getBlackImage(){
-        return blackImage;
+    public int getImage(){
+        return image;
     }
 
     @Override

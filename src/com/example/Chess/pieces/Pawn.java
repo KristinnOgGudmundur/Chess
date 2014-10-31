@@ -11,11 +11,9 @@ import java.util.List;
 
 public class Pawn extends Piece {
 
-	public Pawn(Player player, Coordinate position){
-		super(player, position);
+	public Pawn(Player player, Coordinate position, int image){
+		super(player, position, image);
 	}
-    protected static int whiteImage = 2130837511;
-    public static int blackImage = 2130837510;
     protected boolean MovedTwoSpacesLastTurn;
     @Override
     public List<MoveOption> getMoveOptions()
@@ -107,13 +105,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public int getWhiteImage(){
-        return whiteImage;
-    }
-
-    @Override
-    public int getBlackImage(){
-        return blackImage;
+    public int getImage(){
+        return image;
     }
 
     @Override

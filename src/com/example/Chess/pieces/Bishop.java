@@ -11,11 +11,9 @@ import java.util.List;
 
 public class Bishop extends Piece {
 
-	public Bishop(Player player, Coordinate position){
-		super(player, position);
+	public Bishop(Player player, Coordinate position, int image){
+		super(player, position, image);
 	}
-    protected static int whiteImage = 2130837505;
-    public static int blackImage = 2130837504;
 
 	@Override
 	public List<MoveOption> getMoveOptions(){
@@ -68,13 +66,8 @@ public class Bishop extends Piece {
 	}
 
     @Override
-    public int getWhiteImage(){
-        return whiteImage;
-    }
-
-    @Override
-    public int getBlackImage(){
-        return blackImage;
+    public int getImage(){
+        return image;
     }
 
     @Override

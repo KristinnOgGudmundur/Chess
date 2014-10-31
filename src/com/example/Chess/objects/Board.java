@@ -65,10 +65,10 @@ public class Board extends View {
 
 				drawRect.set((int)temp.getLeft(),(int)temp.getTop(),(int)temp.getRight(),(int)temp.getBottom());
 				if((((x & 1) ^ 1) ^ (y & 1)) != 1){
-					m_paintGrid.setColor(Color.WHITE);
+					m_paintGrid.setColor(Color.parseColor("#efebe8"));
 				}
 				else{
-					m_paintGrid.setColor(Color.GRAY);
+					m_paintGrid.setColor(Color.parseColor("#b8c1c0"));
 				}
 				canvas.drawRect(drawRect, m_paintGrid);
 			}
@@ -149,26 +149,19 @@ public class Board extends View {
 			CellBounds bounds = getCellBounds(pos);
 
             this.mypaint=new Paint();
-            //TODO fetch the right icons
-            Bitmap bitmap;
-            if(p.getPlayer() == Player.PLAYER1)
-            {
-                bitmap=BitmapFactory.decodeResource(getResources(), p.getWhiteImage());
-            }else {
-                bitmap=BitmapFactory.decodeResource(getResources(), p.getBlackImage());
-            }
 
-            int id = R.drawable.ic_launcher;
-            System.out.println(id);
+            Bitmap bitmap;
+            bitmap=BitmapFactory.decodeResource(getResources(), p.getImage());
+
             mypaint.setColor(Color.RED);
             mypaint.setAntiAlias(true);
             mypaint.setFilterBitmap(true);
             mypaint.setDither(true);
 
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap,50,50, true);
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap,m_cellSize,m_cellSize, true);
 
             //TODO make icons look better on all displays
-            canvas.drawBitmap(scaledBitmap, bounds.getLeft() + m_cellSize * 0.05f, bounds.getBottom() - m_cellSize * 0.9f, mypaint);
+            canvas.drawBitmap(scaledBitmap, bounds.getLeft() - m_cellSize *0.01f, bounds.getBottom() - m_cellSize * 1.05f, mypaint);
 
             //canvas.drawText(p.getString(), bounds.getLeft() + m_cellSize * 0.5f, bounds.getBottom() - m_cellSize * 0.4f, m_paintPieces);
 		}

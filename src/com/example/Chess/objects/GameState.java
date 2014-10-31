@@ -1,6 +1,7 @@
 package com.example.Chess.objects;
 
 
+import com.example.Chess.R;
 import com.example.Chess.pieces.*;
 
 import java.util.ArrayList;
@@ -21,43 +22,43 @@ public class GameState {
 		instance.pieces = new ArrayList<Piece>();
 
 		//Add pieces for white
-		instance.pieces.add(new Rook(Player.PLAYER1, new Coordinate(1,1)));
-		instance.pieces.add(new Knight(Player.PLAYER1, new Coordinate(2,1)));
-		instance.pieces.add(new Bishop(Player.PLAYER1, new Coordinate(3,1)));
-		instance.pieces.add(new Queen(Player.PLAYER1, new Coordinate(4,1)));
-		instance.pieces.add(new King(Player.PLAYER1, new Coordinate(5,1)));
-		instance.pieces.add(new Bishop(Player.PLAYER1, new Coordinate(6,1)));
-		instance.pieces.add(new Knight(Player.PLAYER1, new Coordinate(7,1)));
-		instance.pieces.add(new Rook(Player.PLAYER1, new Coordinate(8,1)));
+		instance.pieces.add(new Rook(Player.PLAYER1, new Coordinate(1,1),R.drawable.chessrlt60));
+        instance.pieces.add(new Knight(Player.PLAYER1, new Coordinate(2,1), R.drawable.chessnlt60));
+		instance.pieces.add(new Bishop(Player.PLAYER1, new Coordinate(3,1),R.drawable.chessblt60));
+		instance.pieces.add(new Queen(Player.PLAYER1, new Coordinate(4,1), R.drawable.chessqlt60));
+		instance.pieces.add(new King(Player.PLAYER1, new Coordinate(5,1), R.drawable.chessklt60));
+		instance.pieces.add(new Bishop(Player.PLAYER1, new Coordinate(6,1), R.drawable.chessblt60));
+		instance.pieces.add(new Knight(Player.PLAYER1, new Coordinate(7,1), R.drawable.chessnlt60));
+		instance.pieces.add(new Rook(Player.PLAYER1, new Coordinate(8,1), R.drawable.chessrlt60));
 
-		instance.pieces.add(new Pawn(Player.PLAYER1, new Coordinate(1,2)));
-		instance.pieces.add(new Pawn(Player.PLAYER1, new Coordinate(2,2)));
-		instance.pieces.add(new Pawn(Player.PLAYER1, new Coordinate(3,2)));
-		instance.pieces.add(new Pawn(Player.PLAYER1, new Coordinate(4,2)));
-		instance.pieces.add(new Pawn(Player.PLAYER1, new Coordinate(5,2)));
-		instance.pieces.add(new Pawn(Player.PLAYER1, new Coordinate(6,2)));
-		instance.pieces.add(new Pawn(Player.PLAYER1, new Coordinate(7,2)));
-		instance.pieces.add(new Pawn(Player.PLAYER1, new Coordinate(8,2)));
+		instance.pieces.add(new Pawn(Player.PLAYER1, new Coordinate(1,2), R.drawable.chessplt60));
+		instance.pieces.add(new Pawn(Player.PLAYER1, new Coordinate(2,2), R.drawable.chessplt60));
+		instance.pieces.add(new Pawn(Player.PLAYER1, new Coordinate(3,2), R.drawable.chessplt60));
+		instance.pieces.add(new Pawn(Player.PLAYER1, new Coordinate(4,2), R.drawable.chessplt60));
+		instance.pieces.add(new Pawn(Player.PLAYER1, new Coordinate(5,2), R.drawable.chessplt60));
+		instance.pieces.add(new Pawn(Player.PLAYER1, new Coordinate(6,2), R.drawable.chessplt60));
+		instance.pieces.add(new Pawn(Player.PLAYER1, new Coordinate(7,2), R.drawable.chessplt60));
+		instance.pieces.add(new Pawn(Player.PLAYER1, new Coordinate(8,2), R.drawable.chessplt60));
 
 
 		//Add pieces for black
-		instance.pieces.add(new Rook(Player.PLAYER2, new Coordinate(1,8)));
-		instance.pieces.add(new Knight(Player.PLAYER2, new Coordinate(2,8)));
-		instance.pieces.add(new Bishop(Player.PLAYER2, new Coordinate(3,8)));
-		instance.pieces.add(new Queen(Player.PLAYER2, new Coordinate(4,8)));
-		instance.pieces.add(new King(Player.PLAYER2, new Coordinate(5,8)));
-		instance.pieces.add(new Bishop(Player.PLAYER2, new Coordinate(6,8)));
-		instance.pieces.add(new Knight(Player.PLAYER2, new Coordinate(7,8)));
-		instance.pieces.add(new Rook(Player.PLAYER2, new Coordinate(8,8)));
+		instance.pieces.add(new Rook(Player.PLAYER2, new Coordinate(1,8), R.drawable.chessrdt60));
+		instance.pieces.add(new Knight(Player.PLAYER2, new Coordinate(2,8), R.drawable.chessndt60));
+		instance.pieces.add(new Bishop(Player.PLAYER2, new Coordinate(3,8), R.drawable.chessbdt60));
+		instance.pieces.add(new Queen(Player.PLAYER2, new Coordinate(4,8), R.drawable.chessqdt60));
+		instance.pieces.add(new King(Player.PLAYER2, new Coordinate(5,8), R.drawable.chesskdt60));
+		instance.pieces.add(new Bishop(Player.PLAYER2, new Coordinate(6,8), R.drawable.chessbdt60));
+		instance.pieces.add(new Knight(Player.PLAYER2, new Coordinate(7,8), R.drawable.chessndt60));
+		instance.pieces.add(new Rook(Player.PLAYER2, new Coordinate(8,8), R.drawable.chessrdt60));
 
-		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(1,7)));
-		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(2,7)));
-		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(3,7)));
-		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(4,7)));
-		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(5,7)));
-		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(6,7)));
-		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(7,7)));
-		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(8,7)));
+		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(1,7), R.drawable.chesspdt60));
+		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(2,7), R.drawable.chesspdt60));
+		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(3,7), R.drawable.chesspdt60));
+		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(4,7), R.drawable.chesspdt60));
+		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(5,7), R.drawable.chesspdt60));
+		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(6,7), R.drawable.chesspdt60));
+		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(7,7), R.drawable.chesspdt60));
+		instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(8,7), R.drawable.chesspdt60));
 
 		instance.gameStatus = GameStatus.TURN_PLAYER1;
 	}
