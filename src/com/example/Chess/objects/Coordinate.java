@@ -12,6 +12,11 @@ public class Coordinate {
 		row = r;
 	}
 
+	public Coordinate(Coordinate other){
+		col = other.getCol();
+		row = other.getRow();
+	}
+
 	public int getCol(){
 		return col;
 	}

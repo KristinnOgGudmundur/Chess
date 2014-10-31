@@ -39,6 +39,8 @@ public class Board extends View {
 	private GameState gameState;
 	private Piece currentPiece = null;
 	private List<MoveOption> currentMoveOptions = new ArrayList<MoveOption>();
+	private Coordinate lastMoveStart = null;
+	private Coordinate lastMoveEnd = null;
 	//endregion Game logic variables
 
 
@@ -109,6 +111,10 @@ public class Board extends View {
 			canvas.drawText(numberToChar(i + 1), m_numberPadding + m_cellSize * (i + 0.5f) - m_paintLineNumbers.getTextSize() * 0.5f, canvas.getHeight() - m_paintLineNumbers.getTextSize() * 0.25f, m_paintLineNumbers);
 		}
 
+		if(this.lastMoveStart != null){
+			highlightCell(canvas, lastMoveStart, Color.YELLOW);
+			highlightCell(canvas, lastMoveEnd, Color.YELLOW);
+		}
 
 		//Draw highlights
 		if(currentPiece != null){
@@ -240,6 +246,10 @@ public class Board extends View {
 			GameStatus oldStatus = gameState.getGameStatus();
 			GameStatus currentStatus = oldStatus;
 			Piece thePiece = gameState.getPiece(c);
+			Coordinate oldPosition = null;
+			if(currentPiece != null){
+				oldPosition = new Coordinate(currentPiece.getPosition());
+			}
 			if(thePiece != null) {
 				System.out.println(thePiece);
 				if(gameState.playerTurn(thePiece.getPlayer())) {
@@ -265,6 +275,10 @@ public class Board extends View {
 
 			if(oldStatus != currentStatus){
 				//A move was made
+				if(currentStatus != null) {
+					this.lastMoveStart = oldPosition;
+					this.lastMoveEnd = currentPiece.getPosition();
+				}
 				currentPiece = null;
 			}
 		}
