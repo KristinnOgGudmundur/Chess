@@ -3,16 +3,23 @@
 			  android:orientation="vertical"
 			  android:layout_width="fill_parent"
 			  android:layout_height="fill_parent"
+              android:background="@drawable/tiles"
 		>
 	<Button android:id="@+id/button_play"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/buttonPlay"
-			android:onClick="buttonClick"/>
+			android:onClick="buttonClick"
+            android:background="@drawable/back"
+            android:textColor="#423f3b"
+            android:layout_margin="30dp"/>
 	<Button android:id="@+id/button_options"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/buttonOptions"
-			android:onClick="buttonClick"/>
+			android:onClick="buttonClick"
+            android:background="@drawable/back"
+            android:textColor="#423f3b"
+            android:layout_margin="30dp"/>
 </LinearLayout>
 

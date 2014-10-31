@@ -117,16 +117,16 @@ public class Board extends View {
 				switch(m.moveStatus)
 				{
 					case CANMOVE:
-						fillCell(canvas, m.coordinate, Color.parseColor("#1d1f63"));
+						fillCell(canvas, m.coordinate, Color.parseColor("#B31d1f63"));
 						break;
 					case CANCASTLE:
-						fillCell(canvas, m.coordinate, Color.parseColor("#094809"));
+						fillCell(canvas, m.coordinate, Color.parseColor("#B3094809"));
 						break;
 					case CANKILL:
-						highlightCell(canvas, m.coordinate, Color.parseColor("#7e0404"));
+						highlightCell(canvas, m.coordinate, Color.parseColor("#B37e0404"));
 						break;
 					case PROTECTS:
-						highlightCell(canvas, m.coordinate, Color.parseColor("#094809"));
+						highlightCell(canvas, m.coordinate, Color.parseColor("#B3094809"));
 						break;
 				}
 
