@@ -21,6 +21,7 @@ public class PlayActivity extends Activity{
 			boolean newGame = extras.getBoolean("NewGame");
 			if (newGame) {
 				System.out.println("New game");
+				theBoard.reset();
 			} else {
 				System.out.println("Load game");
 			}

@@ -356,6 +356,13 @@ public class Board extends View {
 			default:
 				throw new RuntimeException("Illegal coordinate");
 		}
+	}
 
+	public void reset(){
+		this.currentMoveOptions = null;
+		this.currentPiece = null;
+		this.gameState.reset();
+		this.gameState = GameState.getInstance();
+		invalidate();
 	}
 }
