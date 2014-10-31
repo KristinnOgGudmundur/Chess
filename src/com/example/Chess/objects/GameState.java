@@ -232,5 +232,6 @@ public class GameState {
 
 	public void reset(){
 		instance = new GameState();
+		initializeInstance();
 	}
 }

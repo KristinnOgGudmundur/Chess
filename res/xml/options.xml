@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
+	<PreferenceCategory
+			android:title="@string/optionCategoryFeedback">
+		<EditTextPreference
+				android:defaultValue="50"
+				android:key="soundVolume"
+				android:inputType="number"
+				android:title="@string/optionSound"
+				android:summary="@string/optionSoundDetails">
+		</EditTextPreference>
+		<CheckBoxPreference
+				android:defaultValue="true"
+				android:key="useVibrations"
+				android:title="@string/optionVibrations"
+				android:summary="@string/optionVibrationsDetails">
+		</CheckBoxPreference>
+	</PreferenceCategory>
+	<PreferenceCategory
+			android:title="@string/optionCategoryLineNumbers">
+		<ListPreference
+			android:defaultValue="@string/optionLineNumberValues_OnlyIfBigEnough"
+			android:key="showLineNumbers"
+			android:entries="@array/lineNumberOptions"
+			android:entryValues="@array/lineNumberValues"
+			android:title="@string/optionLineNumbers"
+			android:summary="@string/optionLineNumbersSummary"
+			>
+		</ListPreference>
+	</PreferenceCategory>
 </PreferenceScreen>

@@ -14,6 +14,12 @@ import java.util.List;
 
 public class Board extends View {
 	//region Properties
+	//region Preferences
+	int soundVolume = 0;
+	boolean useVibrations = false;
+	LineNumberOption useLineNumbers = LineNumberOption.IF_BIG_ENOUGH;
+	//endregion Preferences
+
 	//region Drawing variables
 	private int NUM_CELLS = 8;
 	private int m_cellSize;
@@ -51,6 +57,12 @@ public class Board extends View {
 		m_paintLineNumbers.setStrokeWidth(4);
 		m_paintPieces.setTextAlign(Paint.Align.CENTER);
 		m_paintLineNumbers.setColor(Color.GRAY);
+	}
+
+	public void setPreferences(int soundVolume, boolean vibrations, LineNumberOption lineNumbers){
+		this.soundVolume = soundVolume;
+		this.useVibrations = vibrations;
+		this.useLineNumbers = lineNumbers;
 	}
 
 
@@ -177,7 +189,6 @@ public class Board extends View {
 		setMeasuredDimension(size + getPaddingLeft() + getPaddingRight(),
                 size + getPaddingTop() + getPaddingBottom());
 
-		System.out.println("Size: " + size);
 	}
 
 
@@ -185,13 +196,12 @@ public class Board extends View {
 	protected void onSizeChanged( int xNew, int yNew, int xOld, int yOld ) {
 		int size = Math.min(xNew, yNew);
 		int largestPadding = Math.max(Math.max(getPaddingBottom(), getPaddingTop()), Math.max(getPaddingLeft(), getPaddingRight()));
-		if((size - 2 * largestPadding) >= minSizeForNumbers) {
+		if(this.useLineNumbers == LineNumberOption.YES ||
+			(this.useLineNumbers == LineNumberOption.IF_BIG_ENOUGH && (size - 2 * largestPadding) >= minSizeForNumbers)) {
 			m_numberPadding = (size - 2 * largestPadding) / m_numberPaddingFactor;
-			System.out.println("Large: " + (size - 2 * largestPadding));
 		}
 		else{
 			m_numberPadding = 0;
-			System.out.println("Small: " + (size - 2 * largestPadding));
 		}
 
 		m_cellSize = (size - 2 * largestPadding - 2 * m_numberPadding) / NUM_CELLS;
@@ -203,7 +213,6 @@ public class Board extends View {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event){
-		//System.out.println(event.getAction());
 		if(event.getAction() == MotionEvent.ACTION_DOWN) {
 			pressed(event);
 		}
@@ -351,6 +360,13 @@ public class Board extends View {
 			default:
 				throw new RuntimeException("Illegal coordinate");
 		}
+	}
 
+	public void reset(){
+		this.currentMoveOptions = null;
+		this.currentPiece = null;
+		this.gameState.reset();
+		this.gameState = GameState.getInstance();
+		invalidate();
 	}
 }

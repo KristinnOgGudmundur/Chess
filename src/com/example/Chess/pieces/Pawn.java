@@ -77,26 +77,20 @@ public class Pawn extends Piece {
 		//------------------------------------------------------------------------------------------------------------------
 		Piece otherPiece = gameState.getPiece(new Coordinate(this.position.getCol() - 1, this.position.getRow()));
 		if(otherPiece != null) {
-			System.out.println("OtherPiece not null");
 			if (otherPiece instanceof Pawn) {
-				System.out.println(String.format("%s. Moved2LastTurn: %s", otherPiece, ((Pawn) otherPiece).MovedTwoSpacesLastTurn));
 				if (((Pawn) otherPiece).MovedTwoSpacesLastTurn && otherPiece.getPlayer() != this.getPlayer()) {
 					Coordinate theCoordinate = new Coordinate(this.position.getCol() - 1, this.player == Player.PLAYER1 ? pos.getRow() + 1 : pos.getRow() - 1);
 					returnValue.add(new MoveOption(theCoordinate, MoveStatus.CANKILL));
-					System.out.println(String.format("En passant at %s", theCoordinate));
 				}
 			}
 		}
 
 		otherPiece = gameState.getPiece(new Coordinate(this.position.getCol() + 1, this.position.getRow()));
 		if(otherPiece != null) {
-			System.out.println("OtherPiece not null");
 			if (otherPiece instanceof Pawn) {
-				System.out.println(String.format("%s. Moved2LastTurn: %s", otherPiece, ((Pawn) otherPiece).MovedTwoSpacesLastTurn));
 				if (((Pawn) otherPiece).MovedTwoSpacesLastTurn && otherPiece.getPlayer() != this.getPlayer()) {
 					Coordinate theCoordinate = new Coordinate(this.position.getCol() + 1, this.player == Player.PLAYER1 ? pos.getRow() + 1 : pos.getRow() - 1);
 					returnValue.add(new MoveOption(theCoordinate, MoveStatus.CANKILL));
-					System.out.println(String.format("En passant at %s", theCoordinate));
 				}
 			}
 		}
