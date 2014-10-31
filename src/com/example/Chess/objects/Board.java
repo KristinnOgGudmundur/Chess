@@ -158,8 +158,6 @@ public class Board extends View {
                 bitmap=BitmapFactory.decodeResource(getResources(), p.getBlackImage());
             }
 
-            int id = R.drawable.ic_launcher;
-            System.out.println(id);
             mypaint.setColor(Color.RED);
             mypaint.setAntiAlias(true);
             mypaint.setFilterBitmap(true);
