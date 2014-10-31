@@ -117,16 +117,16 @@ public class Board extends View {
 				switch(m.moveStatus)
 				{
 					case CANMOVE:
-						fillCell(canvas, m.coordinate, Color.BLUE);
+						fillCell(canvas, m.coordinate, Color.parseColor("#1d1f63"));
 						break;
 					case CANCASTLE:
-						fillCell(canvas, m.coordinate, Color.GREEN);
+						fillCell(canvas, m.coordinate, Color.parseColor("#094809"));
 						break;
 					case CANKILL:
-						highlightCell(canvas, m.coordinate, Color.RED);
+						highlightCell(canvas, m.coordinate, Color.parseColor("#7e0404"));
 						break;
 					case PROTECTS:
-						highlightCell(canvas, m.coordinate, Color.BLUE);
+						highlightCell(canvas, m.coordinate, Color.parseColor("#094809"));
 						break;
 				}
 
@@ -170,7 +170,7 @@ public class Board extends View {
             mypaint.setFilterBitmap(true);
             mypaint.setDither(true);
 
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap,m_cellSize,m_cellSize, true);
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, m_cellSize, m_cellSize, true);
 
             //TODO make icons look better on all displays
             canvas.drawBitmap(scaledBitmap, bounds.getLeft() - m_cellSize *0.01f, bounds.getBottom() - m_cellSize * 1.05f, mypaint);
