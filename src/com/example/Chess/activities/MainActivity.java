@@ -26,8 +26,9 @@ public class MainActivity extends Activity implements PopupMenu.OnMenuItemClickL
 		if(id == R.id.button_play){
 			PopupMenu theMenu = new PopupMenu(this, button);
 
-			theMenu.getMenu().add("New game");
-			theMenu.getMenu().add("Load game");
+			theMenu.getMenu().add("New Game");
+			theMenu.getMenu().add("Continue Game");
+            theMenu.getMenu().add("Load Game");
 			theMenu.setOnMenuItemClickListener(this);
 			theMenu.show();
 		}
@@ -38,15 +39,20 @@ public class MainActivity extends Activity implements PopupMenu.OnMenuItemClickL
 
 	@Override
 	public boolean onMenuItemClick(MenuItem item) {
-		Intent theIntent = new Intent(this, PlayActivity.class);
-		if(item.getTitle() == "New game"){
+		Intent theIntent = null;
+		if(item.getTitle() == "New Game"){
+            theIntent = new Intent(this, PlayActivity.class);
 			theIntent.removeExtra("NewGame");
 			theIntent.putExtra("NewGame", true);
 		}
-		if(item.getTitle() == "Load game"){
+		if(item.getTitle() == "Continue Game"){
+            theIntent = new Intent(this, PlayActivity.class);
 			theIntent.removeExtra("NewGame");
 			theIntent.putExtra("NewGame", false);
 		}
+        if(item.getTitle() == "Load Game"){
+            theIntent = new Intent(this, LoadActivity.class);
+        }
 		startActivity(theIntent);
 		return false;
 	}

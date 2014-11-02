@@ -1,6 +1,7 @@
 package com.example.Chess.objects;
 
 
+import android.widget.TextView;
 import com.example.Chess.R;
 import com.example.Chess.pieces.*;
 

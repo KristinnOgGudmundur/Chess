@@ -1,8 +1,9 @@
 package com.example.Chess.activities;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
+import android.preference.*;
 import com.example.Chess.R;
 
 /**
@@ -13,5 +14,11 @@ public class OptionsActivity extends PreferenceActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.options);
+
+        EditTextPreference pref = (EditTextPreference) findPreference("tempTime");
+        EditTextPreference pref2 = (EditTextPreference) findPreference("tempTime2");
+        PreferenceCategory cat = (PreferenceCategory) findPreference("preferenceCat");
+        cat.removePreference(pref);
+        cat.removePreference(pref2);
 	}
 }

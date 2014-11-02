@@ -10,4 +10,17 @@
 		<item>@string/optionLineNumberValues_Yes</item>
 		<item>@string/optionLineNumberValues_No</item>
 	</string-array>
+
+    <string-array name="timeOptions">
+        <item>@string/timeThreeMin</item>
+        <item>@string/timeTenMin</item>
+        <item>@string/timeThirtyMin</item>
+        <item>@string/timeNoTime</item>
+    </string-array>
+    <string-array name="timeValues">
+        <item>@string/timeValuesThreeMin</item>
+        <item>@string/timeValuesTenMin</item>
+        <item>@string/timeValuesThirtyMin</item>
+        <item>@string/timeValuesNoTime</item>
+    </string-array>
 </resources>

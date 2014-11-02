@@ -6,7 +6,9 @@ import android.graphics.*;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 import com.example.Chess.R;
+import com.example.Chess.activities.PlayActivity;
 import com.example.Chess.pieces.Piece;
 
 import java.util.ArrayList;
@@ -21,6 +23,8 @@ public class Board extends View {
 	//endregion Preferences
 
 	//region Drawing variables
+    private boolean finished = false;
+    private boolean turn = true;
 	private int NUM_CELLS = 8;
 	private int m_cellSize;
 	private int m_numberPadding;
@@ -72,6 +76,18 @@ public class Board extends View {
 	protected void onDraw(Canvas canvas){
 		CellBounds temp;
 
+        this.mypaint=new Paint();
+        mypaint.setColor(Color.RED);
+        mypaint.setAntiAlias(true);
+        mypaint.setFilterBitmap(true);
+        mypaint.setDither(true);
+
+        Bitmap backBitmap;
+        backBitmap=BitmapFactory.decodeResource(getResources(), R.drawable.plank);
+        Bitmap backScaledBitmap = Bitmap.createScaledBitmap(backBitmap, m_cellSize * 8, m_cellSize * 8, true);
+        canvas.drawBitmap(backScaledBitmap, 0, 0, mypaint);
+
+
 		//Draw the squares
 		for(int x = 1; x < NUM_CELLS + 1; x++){
 			for(int y = 1; y < NUM_CELLS + 1; y++){
@@ -79,14 +95,20 @@ public class Board extends View {
 
 				drawRect.set((int)temp.getLeft(),(int)temp.getTop(),(int)temp.getRight(),(int)temp.getBottom());
 				if((((x & 1) ^ 1) ^ (y & 1)) != 1){
-					m_paintGrid.setColor(Color.parseColor("#efebe8"));
+					m_paintGrid.setColor(Color.parseColor("#80efebe8"));
 				}
 				else{
-					m_paintGrid.setColor(Color.parseColor("#b8c1c0"));
+					m_paintGrid.setColor(Color.parseColor("#80b8c1c0"));
 				}
 				canvas.drawRect(drawRect, m_paintGrid);
 			}
 		}
+
+        Paint borderPaint = new Paint();
+        borderPaint.setColor(Color.parseColor("#423f3b"));
+        borderPaint.setStyle(Paint.Style.STROKE);
+        borderPaint.setStrokeWidth(10);
+        canvas.drawRect(0, 0, m_cellSize * 8 + 4, m_cellSize * 8 + 4, borderPaint);
 
 		//Draw the edge of the board for clarity
 		//If there is enough space
@@ -112,8 +134,8 @@ public class Board extends View {
 		}
 
 		if(this.lastMoveStart != null){
-			highlightCell(canvas, lastMoveStart, Color.YELLOW);
-			highlightCell(canvas, lastMoveEnd, Color.YELLOW);
+			highlightCell(canvas, lastMoveStart, Color.parseColor("#B3bdb29d"));
+			highlightCell(canvas, lastMoveEnd, Color.parseColor("#B3bdb29d"));
 		}
 
 		//Draw highlights
@@ -167,19 +189,16 @@ public class Board extends View {
 			CellBounds bounds = getCellBounds(pos);
 
             this.mypaint=new Paint();
-
-            Bitmap bitmap;
-            bitmap=BitmapFactory.decodeResource(getResources(), p.getImage());
-
             mypaint.setColor(Color.RED);
             mypaint.setAntiAlias(true);
             mypaint.setFilterBitmap(true);
             mypaint.setDither(true);
 
+            Bitmap bitmap;
+            bitmap=BitmapFactory.decodeResource(getResources(), p.getImage());
             Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, m_cellSize, m_cellSize, true);
 
-            //TODO make icons look better on all displays
-            canvas.drawBitmap(scaledBitmap, bounds.getLeft() - m_cellSize *0.01f, bounds.getBottom() - m_cellSize * 1.05f, mypaint);
+            canvas.drawBitmap(scaledBitmap, bounds.getLeft() - m_cellSize *0.01f, bounds.getBottom() - m_cellSize, mypaint);
 
             //canvas.drawText(p.getString(), bounds.getLeft() + m_cellSize * 0.5f, bounds.getBottom() - m_cellSize * 0.4f, m_paintPieces);
 		}
@@ -219,16 +238,20 @@ public class Board extends View {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event){
-		if(event.getAction() == MotionEvent.ACTION_DOWN) {
-			pressed(event);
-		}
-		else if(event.getAction() == MotionEvent.ACTION_MOVE){
-			heldDown(event);
-		}
-		else if(event.getAction() == MotionEvent.ACTION_UP){
-			released(event);
-		}
-		return true;
+        if(!finished)
+        {
+            if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                pressed(event);
+            }
+            else if(event.getAction() == MotionEvent.ACTION_MOVE){
+                heldDown(event);
+            }
+            else if(event.getAction() == MotionEvent.ACTION_UP){
+                released(event);
+            }
+            return true;
+        }
+        return true;
 	}
 
 
@@ -278,6 +301,9 @@ public class Board extends View {
 				if(currentStatus != null) {
 					this.lastMoveStart = oldPosition;
 					this.lastMoveEnd = currentPiece.getPosition();
+                    PlayActivity activity = (PlayActivity)getContext();
+                    activity.test(turn);
+                    turn = !turn;
 				}
 				currentPiece = null;
 			}
@@ -383,4 +409,9 @@ public class Board extends View {
 		this.gameState = GameState.getInstance();
 		invalidate();
 	}
+
+    public void finished()
+    {
+        finished = true;
+    }
 }

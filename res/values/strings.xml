@@ -5,7 +5,7 @@
 	<string name="buttonOptions">Options</string>
 
 
-
+    <string name="optionCategoryTime">Clock</string>
 	<string name="optionCategoryFeedback">Sound and vibrations</string>
 	<string name="optionCategoryColorBlind">Colorblind mode</string>
 	<string name="optionCategoryReset">Reset</string>
@@ -16,10 +16,21 @@
 	<string name="optionCategoryLineNumbers">Line numbers</string>
 	<string name="optionLineNumbers">Line numbers</string>
 	<string name="optionLineNumbersSummary">Select whether or not line numbers should be displayed</string>
+    <string name="optionTimes">Clock time</string>
+    <string name="optionTimesSummary">Select the starting time for the game</string>
 	<string name="optionLineNumbers_OnlyIfBigEnough">Only if screen is big enough</string>
 	<string name="optionLineNumbers_Yes">Yes</string>
 	<string name="optionLineNumbers_No">No</string>
 	<string name="optionLineNumberValues_OnlyIfBigEnough">1</string>
 	<string name="optionLineNumberValues_Yes">2</string>
 	<string name="optionLineNumberValues_No">3</string>
+
+    <string name="timeThreeMin">03:00</string>
+    <string name="timeTenMin">10:00</string>
+    <string name="timeThirtyMin">30:00</string>
+    <string name="timeNoTime">No Time</string>
+    <string name="timeValuesThreeMin">1</string>
+    <string name="timeValuesTenMin">2</string>
+    <string name="timeValuesThirtyMin">3</string>
+    <string name="timeValuesNoTime">4</string>
 </resources>
