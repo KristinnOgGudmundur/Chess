@@ -85,7 +85,7 @@ public class Board extends View {
         Bitmap backBitmap;
         backBitmap=BitmapFactory.decodeResource(getResources(), R.drawable.plank);
         Bitmap backScaledBitmap = Bitmap.createScaledBitmap(backBitmap, m_cellSize * 8, m_cellSize * 8, true);
-        canvas.drawBitmap(backScaledBitmap, 0, 0, mypaint);
+        canvas.drawBitmap(backScaledBitmap, m_numberPadding, m_numberPadding, mypaint);
 
 
 		//Draw the squares
@@ -108,7 +108,7 @@ public class Board extends View {
         borderPaint.setColor(Color.parseColor("#423f3b"));
         borderPaint.setStyle(Paint.Style.STROKE);
         borderPaint.setStrokeWidth(10);
-        canvas.drawRect(0, 0, m_cellSize * 8 + 4, m_cellSize * 8 + 4, borderPaint);
+        canvas.drawRect(-2 + m_numberPadding, -2 + m_numberPadding, m_cellSize * 8 + 2 + m_numberPadding, m_cellSize * 8 + 2 + m_numberPadding, borderPaint);
 
 		//Draw the edge of the board for clarity
 		//If there is enough space
