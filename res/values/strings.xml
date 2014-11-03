@@ -25,7 +25,7 @@
 	<string name="optionLineNumberValues_Yes">2</string>
 	<string name="optionLineNumberValues_No">3</string>
 
-    <string name="timeThreeMin">03:00</string>
+    <string name="timeThreeMin">00:10 (debug)</string>
     <string name="timeTenMin">10:00</string>
     <string name="timeThirtyMin">30:00</string>
     <string name="timeNoTime">No Time</string>
