@@ -28,6 +28,7 @@ public class PlayActivity extends Activity{
     private int timerIter = 0;
     private boolean first = true;
     private Board theBoard;
+    private boolean whitePlayerTurn = true;
 
     @Override
 	public void onCreate(Bundle savedInstanceState){
@@ -50,23 +51,36 @@ public class PlayActivity extends Activity{
 		}
             SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 
+        String lineNumbers = settings.getString("showLineNumbers", getString(R.string.optionLineNumberValues_OnlyIfBigEnough));
+        String time = settings.getString("gameTime", getString(R.string.timeValuesThirtyMin));
+        String soundVolume = settings.getString("soundVolume", "0");
+        boolean useVibrations = settings.getBoolean("useVibrations", false);
+
+        LineNumberOption useLineNumbers = null;
+
+        if(lineNumbers.equals(getString(R.string.optionLineNumberValues_Yes))){
+            useLineNumbers = LineNumberOption.YES;
+        }
+        else if(lineNumbers.equals(getString(R.string.optionLineNumberValues_No))){
+            useLineNumbers = LineNumberOption.NO;
+        }
+        else if(lineNumbers.equals(getString(R.string.optionLineNumberValues_OnlyIfBigEnough))) {
+            useLineNumbers = LineNumberOption.IF_BIG_ENOUGH;
+        }
+        theBoard.setPreferences(Integer.parseInt(soundVolume), useVibrations, useLineNumbers);
+
+
         if(newGame)
         {
-            String lineNumbers = settings.getString("showLineNumbers", getString(R.string.optionLineNumberValues_OnlyIfBigEnough));
-            String time = settings.getString("gameTime", getString(R.string.timeValuesThirtyMin));
-            String soundVolume = settings.getString("soundVolume", "0");
-            boolean useVibrations = settings.getBoolean("useVibrations", false);
-
+            whitePlayerTurn = true;
             if(time.equals(getString(R.string.timeValuesNoTime)))
             {
                 useTime = false;
-                p1TimeLeft = -1;
-                p2TimeLeft = -1;
             }
             else if(time.equals(getString(R.string.timeValuesThreeMin)))
             {
-                p1TimeLeft = 180;
-                p2TimeLeft = 180;
+                p1TimeLeft = 10;
+                p2TimeLeft = 10;
                 useTime = true;
             }
             else if(time.equals(getString(R.string.timeValuesTenMin)))
@@ -87,42 +101,76 @@ public class PlayActivity extends Activity{
                 p1.setText(parser(p1TimeLeft));
                 p2.setText(parser(p2TimeLeft));
             }
-
-            LineNumberOption useLineNumbers = null;
-
-            if(lineNumbers.equals(getString(R.string.optionLineNumberValues_Yes))){
-                useLineNumbers = LineNumberOption.YES;
-            }
-            else if(lineNumbers.equals(getString(R.string.optionLineNumberValues_No))){
-                useLineNumbers = LineNumberOption.NO;
-            }
-            else if(lineNumbers.equals(getString(R.string.optionLineNumberValues_OnlyIfBigEnough))){
-                useLineNumbers = LineNumberOption.IF_BIG_ENOUGH;
-            }
-
-            theBoard.setPreferences(Integer.parseInt(soundVolume), useVibrations, useLineNumbers);
         }
         else
         {
             p1TimeLeft = Long.valueOf(settings.getString("tempTime", getString(R.string.timeValuesThirtyMin))).longValue();
             p2TimeLeft = Long.valueOf(settings.getString("tempTime2", getString(R.string.timeValuesThirtyMin))).longValue();
-            useTime = true;
+            whitePlayerTurn = settings.getBoolean("playerTurn", true);
+
             System.out.println(p1TimeLeft);
             System.out.println(p2TimeLeft);
+
             TextView p1 =  (TextView)findViewById(R.id.player1);
             TextView p2 =  (TextView)findViewById(R.id.player2);
-            p1.setText(parser(p1TimeLeft));
-            p2.setText(parser(p2TimeLeft));
+
+            if(p1TimeLeft != 1337 && p1TimeLeft != 1337)
+            {
+                useTime = true;
+                p1.setText(parser(p1TimeLeft));
+                p2.setText(parser(p2TimeLeft));
+            }
+            else
+            {
+
+                useTime = false;
+            }
+
+            if(!whitePlayerTurn)
+            {
+                p2.setBackgroundResource(R.drawable.back2);
+                p1.setBackgroundResource(R.drawable.back);
+            }
+            else
+            {
+                p2.setBackgroundResource(R.drawable.back);
+                p1.setBackgroundResource(R.drawable.back2);
+            }
+
+            if(p1TimeLeft == 0)
+            {
+                theBoard.finished();
+                TextView timer = (TextView)findViewById(R.id.player1);
+                timer.setText("Lost");
+                timer.setBackgroundResource(R.drawable.back2);
+                TextView timer2 = (TextView)findViewById(R.id.player2);
+                timer2.setBackgroundResource(R.drawable.back2);
+                timer2.setText("Won");
+                useTime = false;
+
+            }
+            else if(p2TimeLeft == 0)
+            {
+                theBoard.finished();
+                TextView timer = (TextView)findViewById(R.id.player1);
+                timer.setText("Won");
+                timer.setBackgroundResource(R.drawable.back2);
+                TextView timer2 = (TextView)findViewById(R.id.player2);
+                timer2.setBackgroundResource(R.drawable.back2);
+                timer2.setText("Lost");
+                useTime = false;
+            }
         }
 
 
 	}
 
-    public void test(boolean turn)
+    public void test()
     {
+
         TextView p1 =  (TextView)findViewById(R.id.player1);
         TextView p2 =  (TextView)findViewById(R.id.player2);
-
+        whitePlayerTurn = !whitePlayerTurn;
         if(useTime)
         {
             if(!first)
@@ -133,10 +181,13 @@ public class PlayActivity extends Activity{
             {
                 first = false;
             }
-            startTimer(turn);
+
+            startTimer(whitePlayerTurn);
+
+
         }
 
-        if(turn)
+        if(!whitePlayerTurn)
         {
             p2.setBackgroundResource(R.drawable.back2);
             p1.setBackgroundResource(R.drawable.back);
@@ -169,13 +220,13 @@ public class PlayActivity extends Activity{
                     public void run() {
                         if(player)
                         {
-                            TextView timer = (TextView)findViewById(R.id.player2);
+                            TextView timer = (TextView)findViewById(R.id.player1);
 
                             if(p1TimeLeft <= 0)
                             {
                                 theBoard.finished();
                                 timer.setText("Lost");
-                                TextView timer2 = (TextView)findViewById(R.id.player1);
+                                TextView timer2 = (TextView)findViewById(R.id.player2);
                                 timer2.setBackgroundResource(R.drawable.back2);
                                 timer2.setText("Won");
                             }
@@ -186,13 +237,13 @@ public class PlayActivity extends Activity{
                             }
                         }
                         else {
-                            TextView timer = (TextView)findViewById(R.id.player1);
+                            TextView timer = (TextView)findViewById(R.id.player2);
 
                             if(p2TimeLeft <= 0)
                             {
                                 theBoard.finished();
                                 timer.setText("Lost");
-                                TextView timer2 = (TextView)findViewById(R.id.player2);
+                                TextView timer2 = (TextView)findViewById(R.id.player1);
                                 timer2.setBackgroundResource(R.drawable.back2);
                                 timer2.setText("Won");
                             }
@@ -246,8 +297,18 @@ public class PlayActivity extends Activity{
 
         SharedPreferences tempSettings = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = tempSettings.edit();
-        editor.putString("tempTime", Long.toString(p1TimeLeft));
-        editor.putString("tempTime2", Long.toString(p2TimeLeft));
+
+        if(useTime || theBoard.getFinished())
+        {
+            editor.putString("tempTime", Long.toString(p1TimeLeft));
+            editor.putString("tempTime2", Long.toString(p2TimeLeft));
+        }
+        else
+        {
+            editor.putString("tempTime", "1337");
+            editor.putString("tempTime2", "1337");
+        }
+        editor.putBoolean("playerTurn", whitePlayerTurn);
 
         // Commit the edits!
         editor.commit();

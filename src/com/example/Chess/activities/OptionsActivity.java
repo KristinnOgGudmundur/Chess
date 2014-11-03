@@ -17,8 +17,10 @@ public class OptionsActivity extends PreferenceActivity {
 
         EditTextPreference pref = (EditTextPreference) findPreference("tempTime");
         EditTextPreference pref2 = (EditTextPreference) findPreference("tempTime2");
+        CheckBoxPreference pref3 = (CheckBoxPreference) findPreference("playerTurn");
         PreferenceCategory cat = (PreferenceCategory) findPreference("preferenceCat");
         cat.removePreference(pref);
         cat.removePreference(pref2);
+        cat.removePreference(pref3);
 	}
 }

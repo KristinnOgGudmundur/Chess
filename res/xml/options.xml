@@ -26,6 +26,10 @@
                 android:key="tempTime2"
                 android:inputType="number">
         </EditTextPreference>
+        <CheckBoxPreference
+                android:key="playerTurn"
+                android:defaultValue="true">
+        </CheckBoxPreference>
 	</PreferenceCategory>
 	<PreferenceCategory
         android:title="@string/optionCategoryLineNumbers">

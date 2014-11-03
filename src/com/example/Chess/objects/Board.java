@@ -24,7 +24,6 @@ public class Board extends View {
 
 	//region Drawing variables
     private boolean finished = false;
-    private boolean turn = true;
 	private int NUM_CELLS = 8;
 	private int m_cellSize;
 	private int m_numberPadding;
@@ -302,8 +301,8 @@ public class Board extends View {
 					this.lastMoveStart = oldPosition;
 					this.lastMoveEnd = currentPiece.getPosition();
                     PlayActivity activity = (PlayActivity)getContext();
-                    activity.test(turn);
-                    turn = !turn;
+                    activity.test();
+
 				}
 				currentPiece = null;
 			}
@@ -414,4 +413,7 @@ public class Board extends View {
     {
         finished = true;
     }
+
+    public boolean getFinished(){ return this.finished;}
+
 }
