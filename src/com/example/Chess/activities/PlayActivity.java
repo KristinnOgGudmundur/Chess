@@ -247,7 +247,7 @@ public class PlayActivity extends Activity{
                                 TextView timer2 = (TextView)findViewById(R.id.player2);
                                 timer2.setBackgroundResource(R.drawable.back2);
                                 timer2.setText("Won");
-                                finishedDialog.setMessage("Black won on time \nTime left: " + parser(p2TimeLeft));
+                                finishedDialog.setMessage("Black won on time \nTime left: " + parser(timerIter < 2 ? p2TimeLeft : p2TimeLeft + 1));
                                 finishedDialog.show();
                                 timerTask.cancel();
                             }
@@ -267,7 +267,7 @@ public class PlayActivity extends Activity{
                                 TextView timer2 = (TextView)findViewById(R.id.player1);
                                 timer2.setBackgroundResource(R.drawable.back2);
                                 timer2.setText("Won");
-                                finishedDialog.setMessage("White won on time \nTime left: " + parser(p1TimeLeft));
+                                finishedDialog.setMessage("White won on time \nTime left: " + parser(timerIter < 2 ? p1TimeLeft : p1TimeLeft + 1));
                                 finishedDialog.show();
                                 timerTask.cancel();
                             }
