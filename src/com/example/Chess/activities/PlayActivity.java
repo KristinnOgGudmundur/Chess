@@ -1,6 +1,7 @@
 package com.example.Chess.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,13 +13,11 @@ import com.example.Chess.R;
 import com.example.Chess.objects.Board;
 import com.example.Chess.objects.LineNumberOption;
 import com.example.Chess.objects.Player;
-
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * Created by Gvendur Stefáns on 8.10.2014.
- */
 public class PlayActivity extends Activity{
 
     private long p1TimeLeft;
@@ -29,6 +28,8 @@ public class PlayActivity extends Activity{
     private boolean first = true;
     private Board theBoard;
     private boolean whitePlayerTurn = true;
+    private static AlertDialog.Builder finishedDialog;
+
 
     @Override
 	public void onCreate(Bundle savedInstanceState){
@@ -37,6 +38,23 @@ public class PlayActivity extends Activity{
 
 		theBoard = (Board)findViewById(R.id.board);
 		Bundle extras = getIntent().getExtras();
+
+
+        finishedDialog = new AlertDialog.Builder(this);
+        finishedDialog.setCancelable(true);
+        finishedDialog.setPositiveButton(R.string.mainMenu,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                });
+        finishedDialog.setNegativeButton(R.string.cancel,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
         boolean newGame = true;
 		try {
 			newGame = extras.getBoolean("NewGame");
@@ -229,6 +247,9 @@ public class PlayActivity extends Activity{
                                 TextView timer2 = (TextView)findViewById(R.id.player2);
                                 timer2.setBackgroundResource(R.drawable.back2);
                                 timer2.setText("Won");
+                                finishedDialog.setMessage("Black won on time \nTime left: " + parser(p2TimeLeft));
+                                finishedDialog.show();
+                                timerTask.cancel();
                             }
                             else
                             {
@@ -246,6 +267,9 @@ public class PlayActivity extends Activity{
                                 TextView timer2 = (TextView)findViewById(R.id.player1);
                                 timer2.setBackgroundResource(R.drawable.back2);
                                 timer2.setText("Won");
+                                finishedDialog.setMessage("White won on time \nTime left: " + parser(p1TimeLeft));
+                                finishedDialog.show();
+                                timerTask.cancel();
                             }
                             else
                             {
@@ -293,6 +317,10 @@ public class PlayActivity extends Activity{
 
     @Override
     protected void onStop() {
+        if(timerTask != null)
+        {
+            timerTask.cancel();
+        }
         super.onStop();
 
         SharedPreferences tempSettings = PreferenceManager.getDefaultSharedPreferences(this);
