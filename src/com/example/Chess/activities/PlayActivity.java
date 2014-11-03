@@ -36,7 +36,11 @@ public class PlayActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.play);
 
-		theBoard = (Board)findViewById(R.id.board);
+        SharedPreferences mysettings = getSharedPreferences("MyPrefs", 0);
+
+        mysettings.edit().putBoolean("is_first_time", false).commit();
+
+        theBoard = (Board)findViewById(R.id.board);
 		Bundle extras = getIntent().getExtras();
 
 
@@ -122,8 +126,8 @@ public class PlayActivity extends Activity{
         }
         else
         {
-            p1TimeLeft = Long.valueOf(settings.getString("tempTime", getString(R.string.timeValuesThirtyMin))).longValue();
-            p2TimeLeft = Long.valueOf(settings.getString("tempTime2", getString(R.string.timeValuesThirtyMin))).longValue();
+            p1TimeLeft = Long.valueOf(settings.getString("tempTime","1800")).longValue();
+            p2TimeLeft = Long.valueOf(settings.getString("tempTime2","1800")).longValue();
             whitePlayerTurn = settings.getBoolean("playerTurn", true);
 
             System.out.println(p1TimeLeft);

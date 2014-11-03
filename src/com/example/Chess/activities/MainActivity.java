@@ -2,6 +2,7 @@ package com.example.Chess.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,12 +23,19 @@ public class MainActivity extends Activity implements PopupMenu.OnMenuItemClickL
 	public void buttonClick(View view){
 		Button button = (Button) view;
 
-		int id = button.getId();
-		if(id == R.id.button_play){
+        SharedPreferences settings = getSharedPreferences("MyPrefs", 0);
+
+
+        int id = button.getId();
+
+        if(id == R.id.button_play){
 			PopupMenu theMenu = new PopupMenu(this, button);
 
 			theMenu.getMenu().add("New Game");
-			theMenu.getMenu().add("Continue Game");
+            //if the app is running on your phone for the first time you cant continue game
+            if (!(settings.getBoolean("is_first_time", true))) {
+                theMenu.getMenu().add("Continue Game");
+            }
             theMenu.getMenu().add("Load Game");
 			theMenu.setOnMenuItemClickListener(this);
 			theMenu.show();
