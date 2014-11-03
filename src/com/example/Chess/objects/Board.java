@@ -133,8 +133,8 @@ public class Board extends View {
 		}
 
 		if(this.lastMoveStart != null){
-			highlightCell(canvas, lastMoveStart, Color.parseColor("#B3bdb29d"));
-			highlightCell(canvas, lastMoveEnd, Color.parseColor("#B3bdb29d"));
+			highlightCell(canvas, lastMoveStart, Color.parseColor("#bdb29d"));
+			highlightCell(canvas, lastMoveEnd, Color.parseColor("#bdb29d"));
 		}
 
 		//Draw highlights
