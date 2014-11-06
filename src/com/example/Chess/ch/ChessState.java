@@ -41,6 +41,7 @@ public class ChessState implements State {
     private static final Map<Character, Piece> chessPieces;
     private static final Map<Piece, Character> chessChFEN;
     static {
+		//Maps characters to pieces(ex. P -> a white pawn, n -> a black knight)
         Map<Character, Piece> aMap = new HashMap<Character, Piece>();
         aMap.put( 'P', new Piece( Player.White.ordinal(), Piecetype.Pawn.ordinal() ) );
         aMap.put( 'N', new Piece( Player.White.ordinal(), Piecetype.Knight.ordinal() ) );
@@ -75,6 +76,7 @@ public class ChessState implements State {
     // Helper functions
     //
 
+	//Checks whether or not given col and row are on the board
     private boolean onBoard( int col, int row ) {
         return ( col >= 0 && col < m_board.cols() && row >= 0 && row < m_board.rows() );
     }
@@ -93,6 +95,7 @@ public class ChessState implements State {
     }
 
 
+	//Checks a move from one square to another, ignoring obstacles
     private void step( int player, int colFrom, int rowFrom, int colDelta, int rowDelta,
                        Capturestyle cap, ChessMove.Movetype movetype, List<Move> moves ) {
         int col = colFrom + colDelta;
@@ -116,6 +119,7 @@ public class ChessState implements State {
     }
 
 
+	//Checks a move from one square to another, considering obstacles
     private void slide( int player, int colFrom, int rowFrom, int colDelta, int rowDelta, int maxSlide,
                         Capturestyle cap, ChessMove.Movetype movetype, List<Move> moves ) {
         int n = maxSlide;
@@ -303,7 +307,7 @@ public class ChessState implements State {
         return false;
     }
 
-
+	//Checks all valid moves for the piece on a coordinate and adds them to moves
     private void moves( int colOn, int rowOn, List<Move> moves ) {
         Piece piece = m_board.get( colOn, rowOn );
 
