@@ -301,7 +301,7 @@ public class Board extends View {
 					this.lastMoveStart = oldPosition;
 					this.lastMoveEnd = currentPiece.getPosition();
                     PlayActivity activity = (PlayActivity)getContext();
-                    activity.test();
+                    activity.newTurn();
 
 				}
 				currentPiece = null;
