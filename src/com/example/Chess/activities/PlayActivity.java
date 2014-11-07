@@ -408,12 +408,12 @@ public class PlayActivity extends Activity{
 
     public void playerwon(int winner) {
         if (winner != 0) {
-            TextView timer = (TextView) findViewById(R.id.player2);
+            TextView timer = (TextView) findViewById(R.id.player1);
             theBoard.finished();
-            timer.setText("Lost");
-            TextView timer2 = (TextView) findViewById(R.id.player1);
+            timer.setText("Won");
+            TextView timer2 = (TextView) findViewById(R.id.player2);
             timer2.setBackgroundResource(R.drawable.back2);
-            timer2.setText("Won");
+            timer2.setText("Lost");
             finishedDialog.setMessage("White won the game \nTime left: " + parser(timerIter < 2 ? p2TimeLeft : p2TimeLeft + 1));
             finishedDialog.show();
             if(timerTask != null)
