@@ -598,6 +598,7 @@ public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 
 					this.lastMoveStart = new Coordinate(s.substring(0, 2));
 					this.lastMoveEnd = new Coordinate(s.substring(2, 4));
+					this.finished = false;
 				}
 			} else {
 				this.lastMoveStart = null;
