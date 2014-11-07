@@ -9,6 +9,7 @@
               android:textSize="30dp"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:onClick="gameChosen"/>
+              android:onClick="gameChosen"
+              android:layout_margin="5dp"/>
 </LinearLayout>
 
