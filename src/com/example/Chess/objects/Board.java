@@ -348,6 +348,7 @@ public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 
                     if(gameWon())
                     {
+						activity.newTurn();
 						activity.playerwon(chessState.getPlayerToMove());
                     }
                     else
