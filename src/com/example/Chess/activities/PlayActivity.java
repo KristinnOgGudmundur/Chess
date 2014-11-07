@@ -169,6 +169,7 @@ public class PlayActivity extends Activity{
                 }
                 else if(time.equals(getString(R.string.timeValuesThreeMin)))
                 {
+					//TODO: Revert
                     p1TimeLeft = 180;
                     p2TimeLeft = 180;
                     useTime = true;
@@ -234,7 +235,7 @@ public class PlayActivity extends Activity{
                 TextView p2 =  (TextView)findViewById(R.id.player2);
 
                 //if the time left was set to 13337 on both players, we know we don't want to use time
-                if(p1TimeLeft != 13337 && p1TimeLeft != 13337)
+                if(p1TimeLeft != 13337 && p2TimeLeft != 13337)
                 {
                     useTime = true;
                     p1.setText(parser(p1TimeLeft));
@@ -261,6 +262,7 @@ public class PlayActivity extends Activity{
                 {
                     //player one lost the current game
                     theBoard.finished();
+
                     TextView timer = (TextView)findViewById(R.id.player1);
                     timer.setText("Lost");
                     timer.setBackgroundResource(R.drawable.back2);
@@ -276,6 +278,7 @@ public class PlayActivity extends Activity{
                 {
                     //player two lost the current game
                     theBoard.finished();
+
                     TextView timer = (TextView)findViewById(R.id.player1);
                     timer.setText("Won");
                     timer.setBackgroundResource(R.drawable.back2);
