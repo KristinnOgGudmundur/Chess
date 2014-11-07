@@ -170,8 +170,8 @@ public class PlayActivity extends Activity{
                 else if(time.equals(getString(R.string.timeValuesThreeMin)))
                 {
 					//TODO: Revert
-                    p1TimeLeft = 5;//180;
-                    p2TimeLeft = 5;//180;
+                    p1TimeLeft = 180;
+                    p2TimeLeft = 180;
                     useTime = true;
                 }
 				else if(time.equals(getString(R.string.timeValuesFiveMin)))
