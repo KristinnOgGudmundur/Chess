@@ -8,10 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,12 +67,24 @@ public class PlayActivity extends Activity{
                             int p2time = new BigDecimal(p2TimeLeft).intValueExact();
                             String boardState = theBoard.getGameState();
                             System.out.println(boardState);
-                            ba.insertBoard(input.getText().toString(), boardState ,p1time,p2time,turn,gameFinished);
+                            long success = -2;
+                            if (!(input.getText().toString().equals(""))) {
+                                success = ba.insertBoard(input.getText().toString(), boardState, p1time, p2time, turn, gameFinished);
+                            }
 
+                            CharSequence text;
+                            if (success == -1) {
+                                text = input.getText().toString() + " Already exists!!!";
+                            } else if (success == -2) {
+                                text = "You need to enter a name for the game!!!";
+                            } else {
+                                text = input.getText().toString() + " Saved";
+                            }
                             Context context = getApplicationContext();
-                            CharSequence text = input.getText().toString() + "\nSaved";
+
                             int duration = Toast.LENGTH_LONG;
                             Toast toast = Toast.makeText(context, text, duration);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
                             toast.show();
                         }
                     }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
