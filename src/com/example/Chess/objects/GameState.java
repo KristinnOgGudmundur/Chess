@@ -64,6 +64,50 @@ public class GameState {
 		instance.gameStatus = GameStatus.TURN_PLAYER1;
 	}
 
+    private static void initializeInstance(String board){
+        instance.pieces = new ArrayList<Piece>();
+
+        int i = 0;
+        for(int y = 1; y < 9; y++)
+        {
+            for(int x = 1; x < 9; x++)
+            {
+                System.out.println(i);
+                switch(board.charAt(i))
+                {
+                    case '0':
+                        break;
+                    case '1': instance.pieces.add(new Pawn(Player.PLAYER1, new Coordinate(x,y), R.drawable.chessplt60));
+                        break;
+                    case '2':instance.pieces.add(new Pawn(Player.PLAYER2, new Coordinate(x,y), R.drawable.chesspdt60));
+                        break;
+                    case '3':instance.pieces.add(new Rook(Player.PLAYER1, new Coordinate(x,y),R.drawable.chessrlt60));
+                        break;
+                    case '4':instance.pieces.add(new Rook(Player.PLAYER2, new Coordinate(x,y), R.drawable.chessrdt60));
+                        break;
+                    case '5':instance.pieces.add(new Knight(Player.PLAYER1, new Coordinate(x,y), R.drawable.chessnlt60));
+                        break;
+                    case '6':instance.pieces.add(new Knight(Player.PLAYER2, new Coordinate(x,y), R.drawable.chessndt60));
+                        break;
+                    case '7':instance.pieces.add(new Bishop(Player.PLAYER1, new Coordinate(x,y), R.drawable.chessblt60));
+                        break;
+                    case '8':instance.pieces.add(new Bishop(Player.PLAYER2, new Coordinate(x,y), R.drawable.chessbdt60));
+                        break;
+                    case '9':instance.pieces.add(new Queen(Player.PLAYER1, new Coordinate(x,y), R.drawable.chessqlt60));
+                        break;
+                    case 'a':instance.pieces.add(new Queen(Player.PLAYER2, new Coordinate(x,y), R.drawable.chessqdt60));
+                        break;
+                    case 'b':instance.pieces.add(new King(Player.PLAYER1, new Coordinate(x,y), R.drawable.chessklt60));
+                        break;
+                    case 'c':instance.pieces.add(new King(Player.PLAYER2, new Coordinate(x,y), R.drawable.chesskdt60));
+                        break;
+                }
+                i++;
+            }
+        }
+        instance.gameStatus = GameStatus.TURN_PLAYER1;
+    }
+
 	public static GameState getInstance(){
 		if(instance == null){
 			System.out.println("Creating instance");
@@ -72,6 +116,13 @@ public class GameState {
 		}
 		return instance;
 	}
+
+    public static GameState getInstance(String board){
+        instance = new GameState();
+        initializeInstance(board);
+
+        return instance;
+    }
 
     public List<Coordinate>getHotZones(Player player) {
 
@@ -235,4 +286,57 @@ public class GameState {
 		instance = new GameState();
 		initializeInstance();
 	}
+
+    public String getGameState()
+    {
+        char[] state = new char[64];
+
+        for(int i = 0; i < state.length; i++)
+        {
+            state[i] = '0';
+        }
+
+        for(Piece p : pieces)
+        {
+            Coordinate cor = p.getPosition();
+
+            if(p.getPlayer() == Player.PLAYER1)
+            {
+                switch (p.getImage())
+                {
+                    case R.drawable.chessplt60: state[(cor.getCol() + ((cor.getRow() -1) * 8)) - 1] = '1';
+                        break;
+                    case R.drawable.chessrlt60: state[(cor.getCol() + ((cor.getRow() -1) * 8)) - 1] = '3';
+                        break;
+                    case R.drawable.chessnlt60: state[(cor.getCol() + ((cor.getRow() -1) * 8)) - 1] = '5';
+                        break;
+                    case R.drawable.chessblt60: state[(cor.getCol() + ((cor.getRow() -1) * 8)) - 1] = '7';
+                        break;
+                    case R.drawable.chessklt60: state[(cor.getCol() + ((cor.getRow() -1) * 8)) - 1] = '9';
+                        break;
+                    case R.drawable.chessqlt60: state[(cor.getCol() + ((cor.getRow() -1) * 8)) - 1] = 'b';
+                        break;
+                }
+            }
+            else
+            {
+                switch (p.getImage())
+                {
+                    case R.drawable.chesspdt60: state[(cor.getCol() + ((cor.getRow() -1) * 8)) - 1] = '2';
+                        break;
+                    case R.drawable.chessrdt60: state[(cor.getCol() + ((cor.getRow() -1) * 8)) - 1] = '4';
+                        break;
+                    case R.drawable.chessndt60: state[(cor.getCol() + ((cor.getRow() -1) * 8)) - 1] = '6';
+                        break;
+                    case R.drawable.chessbdt60: state[(cor.getCol() + ((cor.getRow() -1) * 8)) - 1] = '8';
+                        break;
+                    case R.drawable.chesskdt60: state[(cor.getCol() + ((cor.getRow() -1) * 8)) - 1] = 'a';
+                        break;
+                    case R.drawable.chessqdt60: state[(cor.getCol() + ((cor.getRow() -1) * 8)) - 1] = 'c';
+                        break;
+                }
+            }
+        }
+        return String.valueOf(state);
+    }
 }

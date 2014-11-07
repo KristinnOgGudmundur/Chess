@@ -67,6 +67,12 @@ public class Board extends View {
 		m_paintLineNumbers.setColor(Color.GRAY);
 	}
 
+    public void setGameState(String board)
+    {
+        chessState.setup(board);
+    }
+
+
 	public void setPreferences(int soundVolume, boolean vibrations, LineNumberOption lineNumbers){
 		this.soundVolume = soundVolume;
 		this.useVibrations = vibrations;
@@ -459,4 +465,8 @@ public class Board extends View {
 		return R.drawable.ic_launcher;
 	}
 
+    public String getGameState()
+    {
+		return chessState.getFEN();
+    }
 }

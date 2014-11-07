@@ -6,6 +6,7 @@
 
     <string name="mainMenu">Main menu</string>
     <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
 
     <string name="optionCategoryTime">Clock</string>
 	<string name="optionCategoryFeedback">Sound and vibrations</string>
@@ -16,8 +17,8 @@
 	<string name="optionVibrations">Vibrations</string>
 	<string name="optionVibrationsDetails">Enable vibrations</string>
 	<string name="optionCategoryLineNumbers">Line numbers</string>
-	<string name="optionLineNumbers">Line numbers</string>
-	<string name="optionLineNumbersSummary">Select whether or not line numbers should be displayed</string>
+	<string name="optionLineNumbers">Coordinates</string>
+	<string name="optionLineNumbersSummary">Select whether or not coordinates should be displayed</string>
     <string name="optionTimes">Clock time</string>
     <string name="optionTimesSummary">Select the starting time for the game</string>
 	<string name="optionLineNumbers_OnlyIfBigEnough">Only if screen is big enough</string>
