@@ -12,7 +12,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TableBoards = "boards";
     public static final String[] TableBoardsCols = { "_id", "name", "board" ,"p1time","p2time", "playerturn", "finished"};
 
-    private static final String sqlCreateTableBoards =
+    public static final String sqlCreateTableBoards =
             "CREATE TABLE boards(" +
                     " _id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     " name TEXT unique," +

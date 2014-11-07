@@ -7,7 +7,11 @@
     <string name="back">Back</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
-
+    <string name="optionReset">Reset</string>
+    <string name="optionResetDetails">Resets all progress</string>
+    <string name="confirm">Are you sure?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="optionCategoryTime">Clock</string>
 	<string name="optionCategoryFeedback">Sound and vibrations</string>
 	<string name="optionCategoryColorBlind">Colorblind mode</string>
