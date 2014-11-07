@@ -119,12 +119,12 @@ public class Board extends View {
 		//If there is enough space
 		//Draw the left numbers
 		for(int i = 0; i < 8; i++){
-			canvas.drawText(String.format("%s", i + 1), m_numberPadding * 0.25f, m_numberPadding + m_paintLineNumbers.getTextSize() * 0.25f + m_cellSize * (i + 0.5f), m_paintLineNumbers);
+			canvas.drawText(String.format("%s", 8 - i), m_numberPadding * 0.25f, m_numberPadding + m_paintLineNumbers.getTextSize() * 0.25f + m_cellSize * (i + 0.5f), m_paintLineNumbers);
 		}
 
 		//Draw the right numbers
 		for(int i = 0; i < 8; i++){
-			canvas.drawText(String.format("%s", i + 1), m_cellSize * 8 + m_numberPadding * 1.25f, m_numberPadding + m_paintLineNumbers.getTextSize() * 0.25f + m_cellSize * (i + 0.5f), m_paintLineNumbers);
+			canvas.drawText(String.format("%s", 8 - i), m_cellSize * 8 + m_numberPadding * 1.25f, m_numberPadding + m_paintLineNumbers.getTextSize() * 0.25f + m_cellSize * (i + 0.5f), m_paintLineNumbers);
 		}
 
 		//Draw the top letters
