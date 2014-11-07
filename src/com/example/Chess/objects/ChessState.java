@@ -37,7 +37,7 @@ public class ChessState implements State {
     private enum Capturestyle { NoCapture, CanCapture, MustCapture }
 
     // Static
-    private static final String startFEN = "rnbqkbnr/pppppppp/////PPPPPPPP/RNBQKBNR w";
+    private static final String startFEN = "rnbqkbnr/pppppppp/////PPPPPPPP/RNBQKBNR w KQkq";
     private static final Map<Character, Piece> chessPieces;
     private static final Map<Piece, Character> chessChFEN;
     static {

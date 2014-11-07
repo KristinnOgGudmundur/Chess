@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.view.*;
 import android.widget.EditText;
@@ -32,6 +33,7 @@ public class PlayActivity extends Activity{
     private boolean whitePlayerTurn = true;
     private static AlertDialog.Builder finishedDialog;
     private static boolean finished;
+	private Vibrator m_vibrator;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -114,6 +116,8 @@ public class PlayActivity extends Activity{
         boolean useVibrations = defaultSettings.getBoolean("useVibrations", false);
 
         theBoard = (Board)findViewById(R.id.board);
+
+		m_vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
 
         LineNumberOption useLineNumbers = null;
 
@@ -265,6 +269,7 @@ public class PlayActivity extends Activity{
                     timer2.setText("Won");
                     useTime = false;
                     finished = true;
+
 
                 }
                 else if(p2TimeLeft == 0)
@@ -422,7 +427,10 @@ public class PlayActivity extends Activity{
 
 
     public void playerwon(int winner) {
-        if (winner != 0) {
+		if(theBoard.useVibrations) {
+			m_vibrator.vibrate(500);
+		}
+		if (winner != 0) {
             TextView timer = (TextView) findViewById(R.id.player1);
             theBoard.finished();
             timer.setText("Won");

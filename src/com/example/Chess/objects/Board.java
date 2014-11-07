@@ -20,9 +20,8 @@ public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 	//region Properties
 	//region Preferences
 	int soundVolume = 0;
-	boolean useVibrations = false;
+	public boolean useVibrations = false;
 	LineNumberOption useLineNumbers = LineNumberOption.IF_BIG_ENOUGH;
-	private Vibrator m_vibrator;
 	//endregion Preferences
 
 	//region Drawing variables
@@ -67,15 +66,13 @@ public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 		m_paintLineNumbers.setStrokeWidth(4);
 		m_paintPieces.setTextAlign(Paint.Align.CENTER);
 		m_paintLineNumbers.setColor(Color.GRAY);
-
-		m_vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
 	}
 
     public void setGameState(String board)
     {
         //chessState.setup(board);
         moves = new ArrayList<String>();
-		chessState.reset();
+		chessState = new ChessState();
 		for(int i = 0; i < board.length(); i += 4){
 			game.Move theMove = chessState.strToMove(board.substring(i, i + 4));
 			chessState.make(theMove, null);
@@ -338,9 +335,6 @@ public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 
                     if(gameWon())
                     {
-						if(useVibrations) {
-							m_vibrator.vibrate(500);
-						}
 						activity.playerwon(chessState.getPlayerToMove());
                     }
                     else
@@ -584,7 +578,7 @@ public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 		if(!moves.isEmpty()) {
 			this.moves.remove(this.moves.size() - 1);
 
-			this.chessState.reset();
+			this.chessState = new ChessState();
 			if (!moves.isEmpty()) {
 				for (String s : moves) {
 					game.Move theMove = chessState.strToMove(s);
