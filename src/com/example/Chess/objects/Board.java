@@ -22,10 +22,10 @@ import java.util.List;
 public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 	//region Properties
 	//region Preferences
-	int soundVolume = 0;
-	boolean useVibrations = false;
+	float soundVolume = 0;
+	public boolean useVibrations = false;
+	Vibrator m_vibrator;
 	LineNumberOption useLineNumbers = LineNumberOption.IF_BIG_ENOUGH;
-	private Vibrator m_vibrator;
 	//endregion Preferences
 
 	//region Drawing variables
@@ -91,9 +91,11 @@ public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 
 
 	public void setPreferences(int soundVolume, boolean vibrations, LineNumberOption lineNumbers){
-		this.soundVolume = soundVolume;
+		this.soundVolume = soundVolume / 100.0f;
 		this.useVibrations = vibrations;
 		this.useLineNumbers = lineNumbers;
+
+		this.m_mediaPlayer.setVolume(soundVolume, soundVolume);
 	}
 
 
@@ -346,9 +348,6 @@ public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 
                     if(gameWon())
                     {
-						if(useVibrations) {
-							m_vibrator.vibrate(500);
-						}
 						activity.playerwon(chessState.getPlayerToMove());
                     }
                     else
@@ -599,6 +598,7 @@ public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 
 					this.lastMoveStart = new Coordinate(s.substring(0, 2));
 					this.lastMoveEnd = new Coordinate(s.substring(2, 4));
+					this.finished = false;
 				}
 			} else {
 				this.lastMoveStart = null;
