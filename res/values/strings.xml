@@ -8,7 +8,7 @@
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
     <string name="optionReset">Reset</string>
-    <string name="optionResetDetails">Resets all progress</string>
+    <string name="optionResetDetails">Delete all saved games</string>
     <string name="confirm">Are you sure?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
