@@ -165,10 +165,22 @@ public class PlayActivity extends Activity{
                 }
                 else if(time.equals(getString(R.string.timeValuesThreeMin)))
                 {
-                    p1TimeLeft = 10;
-                    p2TimeLeft = 10;
+                    p1TimeLeft = 180;
+                    p2TimeLeft = 180;
                     useTime = true;
                 }
+				else if(time.equals(getString(R.string.timeValuesFiveMin)))
+				{
+					p1TimeLeft = 300;
+					p2TimeLeft = 300;
+					useTime = true;
+				}
+				else if(time.equals(getString(R.string.timeValuesSevenMin)))
+				{
+					p1TimeLeft = 420;
+					p2TimeLeft = 420;
+					useTime = true;
+				}
                 else if(time.equals(getString(R.string.timeValuesTenMin)))
                 {
                     p1TimeLeft = 600;
