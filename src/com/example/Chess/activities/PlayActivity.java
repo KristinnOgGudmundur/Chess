@@ -35,7 +35,6 @@ public class PlayActivity extends Activity{
     private Board theBoard;
     private boolean whitePlayerTurn = true;
     private static AlertDialog.Builder finishedDialog;
-	public static AlertDialog.Builder promotionDialog;
     private static boolean finished;
 
     @Override
@@ -149,47 +148,6 @@ public class PlayActivity extends Activity{
 				});
 
 
-		//Construct the promotion dialog
-		promotionDialog = new AlertDialog.Builder(this);
-		promotionDialog.setCancelable(true);
-		promotionDialog.setNeutralButton(R.string.promoteQueen,
-				new DialogInterface.OnClickListener(){
-					public void onClick(DialogInterface dialog, int id){
-
-					}
-				});
-		promotionDialog.setNeutralButton(R.string.promoteKnight,
-				new DialogInterface.OnClickListener(){
-					public void onClick(DialogInterface dialog, int id){
-
-					}
-				});
-		promotionDialog.setNeutralButton(R.string.promoteRook,
-				new DialogInterface.OnClickListener(){
-					public void onClick(DialogInterface dialog, int id){
-
-					}
-				});
-		promotionDialog.setNeutralButton(R.string.promoteBishop,
-				new DialogInterface.OnClickListener(){
-					public void onClick(DialogInterface dialog, int id){
-
-					}
-				});
-		promotionDialog.setPositiveButton(R.string.promote,
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						finish();
-					}
-				});
-		promotionDialog.setNegativeButton(R.string.cancel,
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-					}
-				});
-
-
         //Check if this is a new game or an existing game
         boolean newGame;
         boolean loadGame;
@@ -198,7 +156,6 @@ public class PlayActivity extends Activity{
             loadGame = extras.getBoolean("LoadGame");
 			if (newGame)
             {
-				//theBoard.setGameState("3333333333333333333333333333333333333333333333333333333333333333");
                 theBoard.reset();
                 whitePlayerTurn = true;
                 //fetch our clock preference
@@ -250,6 +207,8 @@ public class PlayActivity extends Activity{
                     p1TimeLeft = Long.valueOf(defaultSettings.getString("tempTime","1800")).longValue();
                     p2TimeLeft = Long.valueOf(defaultSettings.getString("tempTime2","1800")).longValue();
                     whitePlayerTurn = defaultSettings.getBoolean("playerTurn", true);
+                    String fen = defaultSettings.getString("fen", "");
+                    theBoard.setGameState(fen);
                 }
 
                 System.out.println(p1TimeLeft);
@@ -322,6 +281,7 @@ public class PlayActivity extends Activity{
     public void newTurn()
     {
 
+        //System.out.println("------------->" + theBoard.gameTerminal());
         TextView p1 =  (TextView)findViewById(R.id.player1);
         TextView p2 =  (TextView)findViewById(R.id.player2);
         whitePlayerTurn = !whitePlayerTurn;
@@ -448,6 +408,37 @@ public class PlayActivity extends Activity{
         }
     }
 
+
+    public void playerwon(int winner) {
+        if (winner != 0) {
+            TextView timer = (TextView) findViewById(R.id.player2);
+            theBoard.finished();
+            timer.setText("Lost");
+            TextView timer2 = (TextView) findViewById(R.id.player1);
+            timer2.setBackgroundResource(R.drawable.back2);
+            timer2.setText("Won");
+            finishedDialog.setMessage("White won the game \nTime left: " + parser(timerIter < 2 ? p2TimeLeft : p2TimeLeft + 1));
+            finishedDialog.show();
+            if(timerTask != null)
+            {
+                timerTask.cancel();
+            }
+
+        } else {
+            TextView timer = (TextView) findViewById(R.id.player1);
+            theBoard.finished();
+            timer.setText("Lost");
+            TextView timer2 = (TextView) findViewById(R.id.player2);
+            timer2.setBackgroundResource(R.drawable.back2);
+            timer2.setText("Won");
+            finishedDialog.setMessage("Black won the game \nTime left: " + parser(timerIter < 2 ? p2TimeLeft : p2TimeLeft + 1));
+            finishedDialog.show();
+            if(timerTask != null)
+            {
+                timerTask.cancel();
+            }
+        }
+    }
     @Override
     protected void onStop() {
         if(timerTask != null)
@@ -471,6 +462,7 @@ public class PlayActivity extends Activity{
             editor.putString("tempTime2", "13337");
         }
         editor.putBoolean("playerTurn", whitePlayerTurn);
+        editor.putString("fen", theBoard.getGameState());
 
         // Commit the edits!
         editor.commit();

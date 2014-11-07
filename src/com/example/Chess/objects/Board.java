@@ -4,20 +4,18 @@ package com.example.Chess.objects;
 import android.content.Context;
 import android.graphics.*;
 import android.util.AttributeSet;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.*;
+import android.widget.PopupMenu;
 import com.example.Chess.R;
 import com.example.Chess.activities.PlayActivity;
-import com.example.Chess.ch.ChessMove;
-import com.example.Chess.ch.ChessState;
-import com.example.Chess.pieces.Piece;
 import game.Move;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Board extends View {
+public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 	//region Properties
 	//region Preferences
 	int soundVolume = 0;
@@ -73,10 +71,12 @@ public class Board extends View {
     public void setGameState(String board)
     {
         //chessState.setup(board);
+        moves = new ArrayList<String>();
 		chessState.reset();
 		for(int i = 0; i < board.length(); i += 4){
 			game.Move theMove = chessState.strToMove(board.substring(i, i + 4));
 			chessState.make(theMove, null);
+            moves.add(board.substring(i, i + 4));
 		}
     }
 
@@ -302,16 +302,24 @@ public class Board extends View {
 			if(oldPosition != null){
 
 				String promotion = "";
-				if(c.getRow() == 8 && oldPlayerToMove == 0){
-					//Add promotion
-					promotion = getPromotionString();
+				List<Move> legalMoves = chessState.getActions();
+				boolean promotionBool = false;
+				for(Move m : legalMoves){
+					if(oldPosition.equals(chessState.sqrToStr(((ChessMove)m).getFrom()))
+						&& c.equals(chessState.sqrToStr(((ChessMove)m).getTo()))){
+						if(((ChessMove)m).getType() == ChessMove.Movetype.Promotion){
+							promotionBool = true;
+							System.out.println("There is a promotion");
+						}
+					}
 				}
-				else if(c.getRow() == 1 && oldPlayerToMove == 1){
-					//Add promotion
+
+				if(promotionBool) {
 					promotion = getPromotionString();
 				}
 
 				String moveString = oldPosition.toString() + c.toString() + promotion;
+				System.out.println("MoveString: " + moveString);
 
 				game.Move theMove = chessState.strToMove(moveString);
 				if(theMove != null) {
@@ -319,17 +327,28 @@ public class Board extends View {
 				}
 				if(oldPlayerToMove != chessState.getPlayerToMove()){
 					//A move was made
+                    PlayActivity activity = (PlayActivity)getContext();
+
 					this.lastMoveStart = oldPosition;
 					this.lastMoveEnd = c;
 					this.moves.add(moveString);
-					PlayActivity activity = (PlayActivity)getContext();
-					activity.newTurn();
+
+                    if(gameWon())
+                    {
+                        activity.playerwon(chessState.getPlayerToMove());
+                    }
+                    else
+                    {
+                        activity.newTurn();
+                    }
 
 					currentPieceCoordinate = null;
 				}
 				else{
 					//No move was made
-					currentPieceCoordinate = c;
+					if(!promotionBool) {
+						currentPieceCoordinate = c;
+					}
 				}
 			}
 			else{
@@ -338,6 +357,11 @@ public class Board extends View {
 		}
 		invalidate();
 	}
+
+    public boolean gameWon()
+    {
+        return chessState.getActions().isEmpty();
+    }
 
 	/**
 	 * Run while the finger is held down
@@ -514,6 +538,16 @@ public class Board extends View {
 
 	public String getPromotionString(){
 		if(promotionString.equals("")){
+			PopupMenu theMenu = new PopupMenu(this.getContext(), this);
+
+			theMenu.getMenu().add("Queen");
+			theMenu.getMenu().add("Knight");
+			theMenu.getMenu().add("Rook");
+			theMenu.getMenu().add("Bishop");
+
+			theMenu.setOnMenuItemClickListener(this);
+
+			theMenu.show();
 			return "";
 		}
 		else{
@@ -521,5 +555,22 @@ public class Board extends View {
 			promotionString = "";
 			return returnValue;
 		}
+	}
+
+	@Override
+	public boolean onMenuItemClick(MenuItem item) {
+		if(item.getTitle() == "Queen"){
+			this.promotionString = "q";
+		}
+		else if(item.getTitle() == "Knight"){
+			this.promotionString = "n";
+		}
+		else if(item.getTitle() == "Rook"){
+			this.promotionString = "r";
+		}
+		else if(item.getTitle() == "Bishop"){
+			this.promotionString = "b";
+		}
+		return false;
 	}
 }

@@ -30,6 +30,10 @@
                 android:key="playerTurn"
                 android:defaultValue="true">
         </CheckBoxPreference>
+        <EditTextPreference
+                android:key="fen"
+                android:inputType="text">
+        </EditTextPreference>
 	</PreferenceCategory>
 	<PreferenceCategory
         android:title="@string/optionCategoryLineNumbers">

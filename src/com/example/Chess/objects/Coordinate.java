@@ -18,7 +18,6 @@ public class Coordinate {
 	}
 
 	public Coordinate(String str){
-		System.out.println("The string is: " + str + ": " + Character.toString(str.charAt(0)) + "," + Character.toString(str.charAt(1)));
 		row = Integer.parseInt(Character.toString(str.charAt(1)));
 		col = charToNumber(Character.toString(str.charAt(0)));
 	}

@@ -1,8 +1,5 @@
 package com.example.Chess.objects;
 
-import com.example.Chess.ch.ChessMove;
-import com.example.Chess.ch.ChessState;
-
 /**
  * Created by Gvendur Stefáns on 8.10.2014.
  */

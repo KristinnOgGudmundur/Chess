@@ -4,7 +4,8 @@
 	<string name="buttonPlay">Play</string>
 	<string name="buttonOptions">Options</string>
 
-    <string name="mainMenu">Main menu</string>
+	<string name="mainMenu">Main menu</string>
+    <string name="back">Back</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
 
