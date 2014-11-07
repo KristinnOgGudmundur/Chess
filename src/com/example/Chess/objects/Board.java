@@ -475,6 +475,9 @@ public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 
     public void finished()
     {
+		if(useVibrations){
+			m_vibrator.vibrate(500);
+		}
         finished = true;
     }
 

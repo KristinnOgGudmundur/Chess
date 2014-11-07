@@ -169,8 +169,9 @@ public class PlayActivity extends Activity{
                 }
                 else if(time.equals(getString(R.string.timeValuesThreeMin)))
                 {
-                    p1TimeLeft = 180;
-                    p2TimeLeft = 180;
+					//TODO: Revert
+                    p1TimeLeft = 5;//180;
+                    p2TimeLeft = 5;//180;
                     useTime = true;
                 }
 				else if(time.equals(getString(R.string.timeValuesFiveMin)))
@@ -261,6 +262,7 @@ public class PlayActivity extends Activity{
                 {
                     //player one lost the current game
                     theBoard.finished();
+
                     TextView timer = (TextView)findViewById(R.id.player1);
                     timer.setText("Lost");
                     timer.setBackgroundResource(R.drawable.back2);
@@ -276,6 +278,7 @@ public class PlayActivity extends Activity{
                 {
                     //player two lost the current game
                     theBoard.finished();
+
                     TextView timer = (TextView)findViewById(R.id.player1);
                     timer.setText("Won");
                     timer.setBackgroundResource(R.drawable.back2);
