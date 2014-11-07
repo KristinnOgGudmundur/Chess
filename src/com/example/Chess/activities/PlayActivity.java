@@ -35,6 +35,7 @@ public class PlayActivity extends Activity{
     private Board theBoard;
     private boolean whitePlayerTurn = true;
     private static AlertDialog.Builder finishedDialog;
+	public static AlertDialog.Builder promotionDialog;
     private static boolean finished;
 
     @Override
@@ -133,19 +134,60 @@ public class PlayActivity extends Activity{
         //Construct our finished dialog
 
         finishedDialog = new AlertDialog.Builder(this);
-        finishedDialog.setCancelable(true);
-        finishedDialog.setPositiveButton(R.string.mainMenu,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                    }
-                });
-        finishedDialog.setNegativeButton(R.string.cancel,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
+		finishedDialog.setCancelable(true);
+		finishedDialog.setPositiveButton(R.string.mainMenu,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						finish();
+					}
+				});
+		finishedDialog.setNegativeButton(R.string.cancel,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
+
+
+		//Construct the promotion dialog
+		promotionDialog = new AlertDialog.Builder(this);
+		promotionDialog.setCancelable(true);
+		promotionDialog.setNeutralButton(R.string.promoteQueen,
+				new DialogInterface.OnClickListener(){
+					public void onClick(DialogInterface dialog, int id){
+
+					}
+				});
+		promotionDialog.setNeutralButton(R.string.promoteKnight,
+				new DialogInterface.OnClickListener(){
+					public void onClick(DialogInterface dialog, int id){
+
+					}
+				});
+		promotionDialog.setNeutralButton(R.string.promoteRook,
+				new DialogInterface.OnClickListener(){
+					public void onClick(DialogInterface dialog, int id){
+
+					}
+				});
+		promotionDialog.setNeutralButton(R.string.promoteBishop,
+				new DialogInterface.OnClickListener(){
+					public void onClick(DialogInterface dialog, int id){
+
+					}
+				});
+		promotionDialog.setPositiveButton(R.string.promote,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						finish();
+					}
+				});
+		promotionDialog.setNegativeButton(R.string.cancel,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
 
 
         //Check if this is a new game or an existing game

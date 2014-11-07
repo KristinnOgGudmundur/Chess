@@ -26,6 +26,14 @@
             android:layout_gravity="center_horizontal"
 			/>
 
+	<ListView	android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/promotionPopup"
+				android:gravity="center"
+				android:visibility="invisible">
+
+	</ListView>
+
     <TextView android:layout_width="match_parent"
               android:id="@+id/player1"
               android:layout_height="wrap_content"
@@ -35,4 +43,30 @@
               android:text=""
               android:gravity="center"
               android:layout_margin="4dp"/>
+
+
+	<Button android:id="@+id/promoteQueen"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:visibility="invisible"
+			android:text="Queen">
+	</Button>
+	<Button android:id="@+id/promoteKnight"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:visibility="invisible"
+			android:text="Knight">
+	</Button>
+	<Button android:id="@+id/promoteRook"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:visibility="invisible"
+			android:text="Rook">
+	</Button>
+	<Button android:id="@+id/promoteBishop"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:visibility="invisible"
+			android:text="Bishop">
+	</Button>
 </LinearLayout>

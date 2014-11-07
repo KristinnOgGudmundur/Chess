@@ -6,7 +6,7 @@ import android.graphics.*;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.*;
 import com.example.Chess.R;
 import com.example.Chess.activities.PlayActivity;
 import com.example.Chess.ch.ChessMove;
@@ -49,6 +49,7 @@ public class Board extends View {
 	private Coordinate lastMoveEnd = null;
 
 	private ArrayList<String> moves = new ArrayList<String>();
+	private String promotionString = "";
 	//endregion Game logic variables
 
 
@@ -160,9 +161,7 @@ public class Board extends View {
 				ChessMove theMove = (ChessMove)aMove;
 				MoveOption m = null;
 
-				System.out.println("sqrToStr: " + chessState.sqrToStr(theMove.getFrom()));
 				if(currentPieceCoordinate.equals(chessState.sqrToStr(theMove.getFrom()))){
-					System.out.println("Found a status");
 					m = new MoveOption(chessState, theMove);
 				}
 
@@ -207,7 +206,6 @@ public class Board extends View {
 			for(int i2 = 0; i2 < 8; i2++){
 				game.Piece p = theBoard.get(i1, i2);
 				if(p != null) {
-					System.out.println("Player: " + p.getPlayer());
 					if (p.getPlayer() == 0) {
 						m_paintPieces.setColor(Color.BLUE);
 					} else {
@@ -243,7 +241,7 @@ public class Board extends View {
 		int height = getMeasuredHeight() - getPaddingTop() - getPaddingBottom();
 		int size = Math.min(width, height);
 		setMeasuredDimension(size + getPaddingLeft() + getPaddingRight(),
-                size + getPaddingTop() + getPaddingBottom());
+				size + getPaddingTop() + getPaddingBottom());
 
 	}
 
@@ -302,8 +300,19 @@ public class Board extends View {
 			int oldPlayerToMove = chessState.getPlayerToMove();
 
 			if(oldPosition != null){
-				String moveString = oldPosition.toString() + c.toString();
-				//d1d2
+
+				String promotion = "";
+				if(c.getRow() == 8 && oldPlayerToMove == 0){
+					//Add promotion
+					promotion = getPromotionString();
+				}
+				else if(c.getRow() == 1 && oldPlayerToMove == 1){
+					//Add promotion
+					promotion = getPromotionString();
+				}
+
+				String moveString = oldPosition.toString() + c.toString() + promotion;
+
 				game.Move theMove = chessState.strToMove(moveString);
 				if(theMove != null) {
 					chessState.make(theMove, null);
@@ -481,4 +490,36 @@ public class Board extends View {
 		return returnValue;
 		//return chessState.getFEN();
     }
+
+	/*
+	public String promotionPrompt(Player thePlayer){
+		PopupMenu theMenu = new PopupMenu(this.getContext(), this);
+
+		theMenu.getMenu().add("Queen");
+		theMenu.getMenu().add("Knight");
+		theMenu.getMenu().add("Rook");
+		theMenu.getMenu().add("Bishop");
+
+		theMenu.show();
+
+
+		//theMenu.setVisibility(VISIBLE);
+		return "";
+	}
+	*/
+
+	public void setPromotionString(String p){
+		this.promotionString = p;
+	}
+
+	public String getPromotionString(){
+		if(promotionString.equals("")){
+			return "";
+		}
+		else{
+			String returnValue = promotionString;
+			promotionString = "";
+			return returnValue;
+		}
+	}
 }

@@ -8,6 +8,12 @@
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
 
+	<string name="promote">Promotion</string>
+	<string name="promoteQueen">Queen</string>
+	<string name="promoteKnight">Knight</string>
+	<string name="promoteRook">Rook</string>
+	<string name="promoteBishop">Bishop</string>
+
     <string name="optionCategoryTime">Clock</string>
 	<string name="optionCategoryFeedback">Sound and vibrations</string>
 	<string name="optionCategoryColorBlind">Colorblind mode</string>
