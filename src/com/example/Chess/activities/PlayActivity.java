@@ -91,6 +91,9 @@ public class PlayActivity extends Activity{
             }).show();
             return true;
         }
+		else if(item.getItemId() == R.id.action_undo){
+			theBoard.backTrack();
+		}
         return super.onOptionsItemSelected(item);
     }
 
