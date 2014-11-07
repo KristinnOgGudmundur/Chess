@@ -312,11 +312,20 @@ public class Board extends View {
 				}
 				if(oldPlayerToMove != chessState.getPlayerToMove()){
 					//A move was made
+                    PlayActivity activity = (PlayActivity)getContext();
+
 					this.lastMoveStart = oldPosition;
 					this.lastMoveEnd = c;
 					this.moves.add(moveString);
-					PlayActivity activity = (PlayActivity)getContext();
-					activity.newTurn();
+
+                    if(gameWon())
+                    {
+                        activity.playerwon(chessState.getPlayerToMove());
+                    }
+                    else
+                    {
+                        activity.newTurn();
+                    }
 
 					currentPieceCoordinate = null;
 				}
@@ -331,6 +340,11 @@ public class Board extends View {
 		}
 		invalidate();
 	}
+
+    public boolean gameWon()
+    {
+        return chessState.getActions().isEmpty();
+    }
 
 	/**
 	 * Run while the finger is held down
