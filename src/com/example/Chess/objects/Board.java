@@ -64,6 +64,12 @@ public class Board extends View {
 		m_paintLineNumbers.setColor(Color.GRAY);
 	}
 
+    public void setGameState(String board)
+    {
+        gameState = GameState.getInstance(board);
+    }
+
+
 	public void setPreferences(int soundVolume, boolean vibrations, LineNumberOption lineNumbers){
 		this.soundVolume = soundVolume;
 		this.useVibrations = vibrations;
@@ -415,5 +421,10 @@ public class Board extends View {
     }
 
     public boolean getFinished(){ return this.finished;}
+
+    public String getGameState()
+    {
+        return gameState.getGameState();
+    }
 
 }

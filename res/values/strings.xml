@@ -6,6 +6,7 @@
 
     <string name="mainMenu">Main menu</string>
     <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
 
     <string name="optionCategoryTime">Clock</string>
 	<string name="optionCategoryFeedback">Sound and vibrations</string>

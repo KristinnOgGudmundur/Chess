@@ -1,20 +1,30 @@
 package com.example.Chess.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.example.Chess.R;
+import com.example.Chess.database.BoardAdapter;
 import com.example.Chess.objects.Board;
 import com.example.Chess.objects.LineNumberOption;
 import com.example.Chess.objects.Player;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+
+import java.math.BigDecimal;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -29,10 +39,58 @@ public class PlayActivity extends Activity{
     private Board theBoard;
     private boolean whitePlayerTurn = true;
     private static AlertDialog.Builder finishedDialog;
-
+    private static boolean finished;
 
     @Override
-	public void onCreate(Bundle savedInstanceState){
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_actions, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        if(item.getItemId() == R.id.action_save)
+        {
+            final EditText input = new EditText(this);
+            final BoardAdapter ba = new BoardAdapter( this );
+
+            new AlertDialog.Builder(this)
+                    .setTitle("Saving Game")
+                    .setMessage("Name of game:")
+                    .setView(input)
+                    .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            System.out.println(input.getText());
+                            int turn = (whitePlayerTurn) ? 1 : 0;
+                            int gameFinished = (finished) ? 1 : 0;
+                            int p1time = new BigDecimal(p1TimeLeft).intValueExact();
+                            int p2time = new BigDecimal(p2TimeLeft).intValueExact();
+                            String boardState = theBoard.getGameState();
+                            System.out.println(boardState);
+                            ba.insertBoard(input.getText().toString(), boardState ,p1time,p2time,turn,gameFinished);
+
+                            Context context = getApplicationContext();
+                            CharSequence text = input.getText().toString() + "\nSaved";
+                            int duration = Toast.LENGTH_LONG;
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
+                        }
+                    }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    // Do nothing.
+                }
+            }).show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+	public void onCreate(final Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.play);
         Bundle extras = getIntent().getExtras();
@@ -81,13 +139,17 @@ public class PlayActivity extends Activity{
                     }
                 });
 
+
         //Check if this is a new game or an existing game
         boolean newGame;
+        boolean loadGame;
 		try {
 			newGame = extras.getBoolean("NewGame");
+            loadGame = extras.getBoolean("LoadGame");
 			if (newGame)
             {
-				theBoard.reset();
+				//theBoard.setGameState("3333333333333333333333333333333333333333333333333333333333333333");
+                theBoard.reset();
                 whitePlayerTurn = true;
                 //fetch our clock preference
                 if(time.equals(getString(R.string.timeValuesNoTime)))
@@ -121,10 +183,24 @@ public class PlayActivity extends Activity{
 			}
             else
             {
-                //fetch preference from earlier game
-                p1TimeLeft = Long.valueOf(defaultSettings.getString("tempTime","1800")).longValue();
-                p2TimeLeft = Long.valueOf(defaultSettings.getString("tempTime2","1800")).longValue();
-                whitePlayerTurn = defaultSettings.getBoolean("playerTurn", true);
+                if(loadGame)
+                {
+                    String boardState = extras.getString("BoardState");
+                    int p1t = extras.getInt("p1Time");
+                    int p2t = extras.getInt("p2Time");
+                    p1TimeLeft = Long.valueOf(p1t);
+                    p2TimeLeft =Long.valueOf(p2t);
+                    int turn = extras.getInt("turn");
+                    whitePlayerTurn = (turn != 0);
+                    theBoard.setGameState(boardState);
+                }
+                else
+                {
+                    //fetch preference from earlier game
+                    p1TimeLeft = Long.valueOf(defaultSettings.getString("tempTime","1800")).longValue();
+                    p2TimeLeft = Long.valueOf(defaultSettings.getString("tempTime2","1800")).longValue();
+                    whitePlayerTurn = defaultSettings.getBoolean("playerTurn", true);
+                }
 
                 System.out.println(p1TimeLeft);
                 System.out.println(p2TimeLeft);
@@ -167,6 +243,7 @@ public class PlayActivity extends Activity{
                     timer2.setBackgroundResource(R.drawable.back2);
                     timer2.setText("Won");
                     useTime = false;
+                    finished = true;
 
                 }
                 else if(p2TimeLeft == 0)
@@ -180,6 +257,7 @@ public class PlayActivity extends Activity{
                     timer2.setBackgroundResource(R.drawable.back2);
                     timer2.setText("Lost");
                     useTime = false;
+                    finished = true;
                 }
 			}
 		}
