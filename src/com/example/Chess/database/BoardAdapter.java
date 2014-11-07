@@ -54,6 +54,16 @@ public class BoardAdapter {
         return cursor;
     }
 
+    public void drop()
+    {
+        openToRead();
+        db.execSQL("DROP TABLE IF EXISTS " + DBHelper.TableBoards);
+    }
+
+    public void create()
+    {
+        db.execSQL(DBHelper.sqlCreateTableBoards);
+    }
     public Cursor queryBoards( String name) {
         openToRead();
         String[] cols = DBHelper.TableBoardsCols;

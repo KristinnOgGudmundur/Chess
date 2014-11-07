@@ -59,4 +59,10 @@
                 >
         </ListPreference>
     </PreferenceCategory>
+    <PreferenceCategory
+            android:title="@string/optionCategoryReset">
+        <Preference android:key="reset"
+                    android:title="@string/optionReset"
+                    android:summary="@string/optionResetDetails"/>
+    </PreferenceCategory>
 </PreferenceScreen>
