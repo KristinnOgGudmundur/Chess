@@ -234,7 +234,7 @@ public class PlayActivity extends Activity{
                 TextView p2 =  (TextView)findViewById(R.id.player2);
 
                 //if the time left was set to 13337 on both players, we know we don't want to use time
-                if(p1TimeLeft != 13337 && p1TimeLeft != 13337)
+                if(p1TimeLeft != 13337 && p2TimeLeft != 13337)
                 {
                     useTime = true;
                     p1.setText(parser(p1TimeLeft));
