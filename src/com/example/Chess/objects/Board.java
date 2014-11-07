@@ -3,6 +3,7 @@ package com.example.Chess.objects;
 
 import android.content.Context;
 import android.graphics.*;
+import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -21,6 +22,7 @@ public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 	int soundVolume = 0;
 	boolean useVibrations = false;
 	LineNumberOption useLineNumbers = LineNumberOption.IF_BIG_ENOUGH;
+	private Vibrator m_vibrator;
 	//endregion Preferences
 
 	//region Drawing variables
@@ -42,7 +44,6 @@ public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 	//region Game logic variables
 	private ChessState chessState;
 	private Coordinate currentPieceCoordinate = null;
-	//private List<MoveOption> currentMoveOptions = new ArrayList<MoveOption>();
 	private Coordinate lastMoveStart = null;
 	private Coordinate lastMoveEnd = null;
 
@@ -66,6 +67,8 @@ public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 		m_paintLineNumbers.setStrokeWidth(4);
 		m_paintPieces.setTextAlign(Paint.Align.CENTER);
 		m_paintLineNumbers.setColor(Color.GRAY);
+
+		m_vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
 	}
 
     public void setGameState(String board)
@@ -335,7 +338,10 @@ public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 
                     if(gameWon())
                     {
-                        activity.playerwon(chessState.getPlayerToMove());
+						if(useVibrations) {
+							m_vibrator.vibrate(500);
+						}
+						activity.playerwon(chessState.getPlayerToMove());
                     }
                     else
                     {
@@ -572,5 +578,46 @@ public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 			this.promotionString = "b";
 		}
 		return false;
+	}
+
+	public void backTrack(){
+		if(!moves.isEmpty()) {
+			this.moves.remove(this.moves.size() - 1);
+
+			this.chessState.reset();
+			if (!moves.isEmpty()) {
+				for (String s : moves) {
+					game.Move theMove = chessState.strToMove(s);
+					chessState.make(theMove, null);
+
+					this.lastMoveStart = new Coordinate(s.substring(0, 2));
+					this.lastMoveEnd = new Coordinate(s.substring(2, 4));
+				}
+			} else {
+				this.lastMoveStart = null;
+				this.lastMoveEnd = null;
+			}
+
+
+			//this.lastMoveStart = null;
+			//this.lastMoveEnd = null;
+
+			PlayActivity theActivity = (PlayActivity) getContext();
+			theActivity.newTurn();
+
+			invalidate();
+		}
+
+
+		/*
+		//chessState.setup(board);
+		moves = new ArrayList<String>();
+		chessState.reset();
+		for(int i = 0; i < board.length(); i += 4){
+			game.Move theMove = chessState.strToMove(board.substring(i, i + 4));
+			chessState.make(theMove, null);
+			moves.add(board.substring(i, i + 4));
+		}
+		*/
 	}
 }
