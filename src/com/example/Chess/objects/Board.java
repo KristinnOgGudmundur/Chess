@@ -72,10 +72,12 @@ public class Board extends View {
     public void setGameState(String board)
     {
         //chessState.setup(board);
+        moves = new ArrayList<String>();
 		chessState.reset();
 		for(int i = 0; i < board.length(); i += 4){
 			game.Move theMove = chessState.strToMove(board.substring(i, i + 4));
 			chessState.make(theMove, null);
+            moves.add(board.substring(i, i + 4));
 		}
     }
 

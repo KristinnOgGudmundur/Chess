@@ -208,6 +208,8 @@ public class PlayActivity extends Activity{
                     p1TimeLeft = Long.valueOf(defaultSettings.getString("tempTime","1800")).longValue();
                     p2TimeLeft = Long.valueOf(defaultSettings.getString("tempTime2","1800")).longValue();
                     whitePlayerTurn = defaultSettings.getBoolean("playerTurn", true);
+                    String fen = defaultSettings.getString("fen","");
+                    theBoard.setGameState(fen);
                 }
 
                 System.out.println(p1TimeLeft);
@@ -429,6 +431,7 @@ public class PlayActivity extends Activity{
             editor.putString("tempTime2", "13337");
         }
         editor.putBoolean("playerTurn", whitePlayerTurn);
+        editor.putString("fen", theBoard.getGameState());
 
         // Commit the edits!
         editor.commit();
