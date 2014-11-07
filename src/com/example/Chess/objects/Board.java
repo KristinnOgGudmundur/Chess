@@ -3,10 +3,13 @@ package com.example.Chess.objects;
 
 import android.content.Context;
 import android.graphics.*;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import android.widget.PopupMenu;
 import com.example.Chess.R;
@@ -19,8 +22,9 @@ import java.util.List;
 public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 	//region Properties
 	//region Preferences
-	int soundVolume = 0;
+	float soundVolume = 0;
 	public boolean useVibrations = false;
+	Vibrator m_vibrator;
 	LineNumberOption useLineNumbers = LineNumberOption.IF_BIG_ENOUGH;
 	//endregion Preferences
 
@@ -50,7 +54,7 @@ public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 	private String promotionString = "";
 	//endregion Game logic variables
 
-
+    private MediaPlayer m_mediaPlayer;
 	//endregion Properties
 
 	public Board(Context context, AttributeSet attrs) {
@@ -66,6 +70,11 @@ public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 		m_paintLineNumbers.setStrokeWidth(4);
 		m_paintPieces.setTextAlign(Paint.Align.CENTER);
 		m_paintLineNumbers.setColor(Color.GRAY);
+
+        m_mediaPlayer = MediaPlayer.create(context, R.raw.tick);
+        m_mediaPlayer.setVolume(soundVolume, soundVolume);
+        m_mediaPlayer.setLooping(false);
+		m_vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
 	}
 
     public void setGameState(String board)
@@ -82,9 +91,11 @@ public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 
 
 	public void setPreferences(int soundVolume, boolean vibrations, LineNumberOption lineNumbers){
-		this.soundVolume = soundVolume;
+		this.soundVolume = soundVolume / 100.0f;
 		this.useVibrations = vibrations;
 		this.useLineNumbers = lineNumbers;
+
+		this.m_mediaPlayer.setVolume(soundVolume, soundVolume);
 	}
 
 
@@ -327,6 +338,8 @@ public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 				}
 				if(oldPlayerToMove != chessState.getPlayerToMove()){
 					//A move was made
+                    m_mediaPlayer.setVolume(soundVolume, soundVolume);
+                    m_mediaPlayer.start();
                     PlayActivity activity = (PlayActivity)getContext();
 
 					this.lastMoveStart = oldPosition;
@@ -341,7 +354,6 @@ public class Board extends View implements PopupMenu.OnMenuItemClickListener{
                     {
                         activity.newTurn();
                     }
-
 					currentPieceCoordinate = null;
 				}
 				else{

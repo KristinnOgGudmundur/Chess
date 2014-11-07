@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Plain Old Chess</string>
+	<string name="app_name">Plain Old Chess App</string>
+    <string name="app_nameshort">POCA</string>
+    <string name="options">POCA - Options</string>
+    <string name="load">Your Saved Games</string>
 	<string name="buttonPlay">Play</string>
 	<string name="buttonOptions">Options</string>
 

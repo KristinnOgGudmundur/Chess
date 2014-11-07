@@ -17,12 +17,15 @@
 		</activity>
 		<activity android:name=".activities.PlayActivity"
 				  android:screenOrientation="portrait"
-                  android:theme="@android:style/Theme.Holo.Light.DarkActionBar"/>
+                  android:theme="@android:style/Theme.Holo.Light.DarkActionBar"
+                  android:label="@string/app_nameshort"/>
 		<activity android:name=".activities.OptionsActivity"
 				  android:screenOrientation="portrait"
-                  android:theme="@android:style/Theme.Holo.Light.DarkActionBar"/>
+                  android:theme="@android:style/Theme.Holo.Light.DarkActionBar"
+                  android:label="@string/options"/>
         <activity android:name=".activities.LoadActivity"
                   android:screenOrientation="portrait"
-                  android:theme="@android:style/Theme.Holo.Light.DarkActionBar"/>
+                  android:theme="@android:style/Theme.Holo.Light.DarkActionBar"
+                  android:label="@string/load"/>
 	</application>
 </manifest>
