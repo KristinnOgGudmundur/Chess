@@ -422,33 +422,32 @@ public class PlayActivity extends Activity{
 
 
     public void playerwon(int winner) {
+        TextView timer1 = (TextView) findViewById(R.id.player1);
+        TextView timer2 = (TextView) findViewById(R.id.player2);
         if (winner != 0) {
-            TextView timer = (TextView) findViewById(R.id.player1);
+
             theBoard.finished();
-            timer.setText("Won");
-            TextView timer2 = (TextView) findViewById(R.id.player2);
+            finishedDialog.setMessage("White won the game \nTime left: " + parser(p2TimeLeft));
+            finishedDialog.show();
+            if(timerTask != null)
+            {
+                timerTask.cancel();
+            }
+            timer1.setText("Won");
             timer2.setBackgroundResource(R.drawable.back2);
             timer2.setText("Lost");
-            finishedDialog.setMessage("White won the game \nTime left: " + parser(timerIter < 2 ? p2TimeLeft : p2TimeLeft + 1));
-            finishedDialog.show();
-            if(timerTask != null)
-            {
-                timerTask.cancel();
-            }
 
         } else {
-            TextView timer = (TextView) findViewById(R.id.player1);
             theBoard.finished();
-            timer.setText("Lost");
-            TextView timer2 = (TextView) findViewById(R.id.player2);
-            timer2.setBackgroundResource(R.drawable.back2);
-            timer2.setText("Won");
-            finishedDialog.setMessage("Black won the game \nTime left: " + parser(timerIter < 2 ? p2TimeLeft : p2TimeLeft + 1));
+            finishedDialog.setMessage("Black won the game \nTime left: " + parser(p2TimeLeft));
             finishedDialog.show();
             if(timerTask != null)
             {
                 timerTask.cancel();
             }
+            timer1.setText("Lost");
+            timer2.setBackgroundResource(R.drawable.back2);
+            timer2.setText("Won");
         }
     }
     @Override
@@ -481,4 +480,12 @@ public class PlayActivity extends Activity{
         System.out.println(p1TimeLeft);
         System.out.println(p2TimeLeft);
     }
+    public void displaytimers()
+    {
+        TextView timer1 = (TextView)findViewById(R.id.player1);
+        timer1.setText(parser(p1TimeLeft));
+        TextView timer2 = (TextView)findViewById(R.id.player2);
+        timer2.setText(parser(p2TimeLeft));
+    }
+
 }

@@ -610,6 +610,7 @@ public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 			//this.lastMoveEnd = null;
 
 			PlayActivity theActivity = (PlayActivity) getContext();
+            theActivity.displaytimers();
 			theActivity.newTurn();
 
 			invalidate();
