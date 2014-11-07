@@ -13,12 +13,16 @@
 
     <string-array name="timeOptions">
         <item>@string/timeThreeMin</item>
-        <item>@string/timeTenMin</item>
+        <item>@string/timeFiveMin</item>
+		<item>@string/timeSevenMin</item>
+		<item>@string/timeTenMin</item>
         <item>@string/timeThirtyMin</item>
         <item>@string/timeNoTime</item>
     </string-array>
     <string-array name="timeValues">
         <item>@string/timeValuesThreeMin</item>
+		<item>@string/timeValuesFiveMin</item>
+		<item>@string/timeValuesSevenMin</item>
         <item>@string/timeValuesTenMin</item>
         <item>@string/timeValuesThirtyMin</item>
         <item>@string/timeValuesNoTime</item>

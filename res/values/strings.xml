@@ -40,12 +40,16 @@
 	<string name="optionLineNumberValues_Yes">2</string>
 	<string name="optionLineNumberValues_No">3</string>
 
-    <string name="timeThreeMin">00:10 (debug)</string>
+    <string name="timeThreeMin">3:00</string>
+	<string name="timeFiveMin">5:00</string>
+	<string name="timeSevenMin">7:00</string>
     <string name="timeTenMin">10:00</string>
     <string name="timeThirtyMin">30:00</string>
     <string name="timeNoTime">No Time</string>
     <string name="timeValuesThreeMin">1</string>
-    <string name="timeValuesTenMin">2</string>
-    <string name="timeValuesThirtyMin">3</string>
-    <string name="timeValuesNoTime">4</string>
+	<string name="timeValuesFiveMin">2</string>
+	<string name="timeValuesSevenMin">3</string>
+    <string name="timeValuesTenMin">4</string>
+    <string name="timeValuesThirtyMin">5</string>
+    <string name="timeValuesNoTime">6</string>
 </resources>
