@@ -47,6 +47,8 @@ public class Board extends View {
 	//private List<MoveOption> currentMoveOptions = new ArrayList<MoveOption>();
 	private Coordinate lastMoveStart = null;
 	private Coordinate lastMoveEnd = null;
+
+	private ArrayList<String> moves = new ArrayList<String>();
 	//endregion Game logic variables
 
 
@@ -69,7 +71,12 @@ public class Board extends View {
 
     public void setGameState(String board)
     {
-        chessState.setup(board);
+        //chessState.setup(board);
+		chessState.reset();
+		for(int i = 0; i < board.length(); i += 4){
+			game.Move theMove = chessState.strToMove(board.substring(i, i + 4));
+			chessState.make(theMove, null);
+		}
     }
 
 
@@ -153,7 +160,6 @@ public class Board extends View {
 				ChessMove theMove = (ChessMove)aMove;
 				MoveOption m = null;
 
-				//TODO: Figure out how to get the start position from theMove
 				System.out.println("sqrToStr: " + chessState.sqrToStr(theMove.getFrom()));
 				if(currentPieceCoordinate.equals(chessState.sqrToStr(theMove.getFrom()))){
 					System.out.println("Found a status");
@@ -306,6 +312,7 @@ public class Board extends View {
 					//A move was made
 					this.lastMoveStart = oldPosition;
 					this.lastMoveEnd = c;
+					this.moves.add(moveString);
 					PlayActivity activity = (PlayActivity)getContext();
 					activity.newTurn();
 
@@ -467,6 +474,11 @@ public class Board extends View {
 
     public String getGameState()
     {
-		return chessState.getFEN();
+		String returnValue = "";
+		for(String s : moves){
+			returnValue = returnValue + s;
+		}
+		return returnValue;
+		//return chessState.getFEN();
     }
 }
