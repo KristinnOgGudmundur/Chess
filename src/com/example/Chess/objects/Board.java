@@ -3,12 +3,9 @@ package com.example.Chess.objects;
 
 import android.content.Context;
 import android.graphics.*;
-<<<<<<< HEAD
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-=======
 import android.os.Vibrator;
->>>>>>> 7a5f5f506dd602c87984b4845c7499f4e2fb3eeb
 import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.MotionEvent;
