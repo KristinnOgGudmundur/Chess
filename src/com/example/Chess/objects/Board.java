@@ -9,7 +9,10 @@ import android.view.View;
 import android.widget.TextView;
 import com.example.Chess.R;
 import com.example.Chess.activities.PlayActivity;
+import com.example.Chess.ch.ChessMove;
+import com.example.Chess.ch.ChessState;
 import com.example.Chess.pieces.Piece;
+import game.Move;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +42,9 @@ public class Board extends View {
 	//endregion Drawing variables
 
 	//region Game logic variables
-	private GameState gameState;
-	private Piece currentPiece = null;
-	private List<MoveOption> currentMoveOptions = new ArrayList<MoveOption>();
+	private ChessState chessState;
+	private Coordinate currentPieceCoordinate = null;
+	//private List<MoveOption> currentMoveOptions = new ArrayList<MoveOption>();
 	private Coordinate lastMoveStart = null;
 	private Coordinate lastMoveEnd = null;
 	//endregion Game logic variables
@@ -52,7 +55,7 @@ public class Board extends View {
 	public Board(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		setBackgroundColor(0);
-		gameState = GameState.getInstance();
+		chessState = new ChessState();
 
 		m_paintPieces.setStyle(Paint.Style.FILL);
 		m_paintPieces.setStrokeWidth(4);
@@ -138,68 +141,83 @@ public class Board extends View {
 		}
 
 		//Draw highlights
-		if(currentPiece != null){
-			for(MoveOption m : currentMoveOptions){
-				//Set the color
-				switch(m.moveStatus)
-				{
-					case CANMOVE:
-						fillCell(canvas, m.coordinate, Color.parseColor("#B31d1f63"));
-						break;
-					case CANCASTLE:
-						fillCell(canvas, m.coordinate, Color.parseColor("#B3094809"));
-						break;
-					case CANKILL:
-						highlightCell(canvas, m.coordinate, Color.parseColor("#B37e0404"));
-						break;
-					case PROTECTS:
-						highlightCell(canvas, m.coordinate, Color.parseColor("#B3094809"));
-						break;
+		if(currentPieceCoordinate != null){
+			for(Move aMove : chessState.getActions()){
+			//for(MoveOption m : currentMoveOptions){
+				ChessMove theMove = (ChessMove)aMove;
+				MoveOption m = null;
+
+				//TODO: Figure out how to get the start position from theMove
+				if(chessState.sqrToStr(theMove.getFrom()).equals(currentPieceCoordinate)){
+					m = new MoveOption(theMove);
 				}
 
-				//Highlight the cell
-				switch(m.moveStatus)
-				{
-					case CANMOVE:
-					case CANCASTLE:
+				if(m != null) {
+					//Set the color
+					switch (m.moveStatus) {
+						case CANMOVE:
+							fillCell(canvas, m.coordinate, Color.parseColor("#B31d1f63"));
+							break;
+						case CANCASTLE:
+							fillCell(canvas, m.coordinate, Color.parseColor("#B3094809"));
+							break;
+						case CANKILL:
+							highlightCell(canvas, m.coordinate, Color.parseColor("#B37e0404"));
+							break;
+						case PROTECTS:
+							highlightCell(canvas, m.coordinate, Color.parseColor("#B3094809"));
+							break;
+					}
 
-						break;
-					case CANKILL:
-					case PROTECTS:
+					//Highlight the cell
+					switch (m.moveStatus) {
+						case CANMOVE:
+						case CANCASTLE:
 
-						break;
+							break;
+						case CANKILL:
+						case PROTECTS:
+
+							break;
+					}
 				}
-
 			}
 		}
 
 
 
 		// Draw the pieces
-		for(Piece p : gameState.getPieces()){
-			if(p.getPlayer() == Player.PLAYER1){
-				m_paintPieces.setColor(Color.BLUE);
+		//for(Piece p : gameState.getPieces()){
+		game.Board theBoard = chessState.getBoard();
+		for(int i1 = 0; i1 < 8; i1++) {
+			for(int i2 = 0; i2 < 8; i2++){
+				game.Piece p = theBoard.get(i1, i2);
+				if(p != null) {
+					System.out.println("Player: " + p.getPlayer());
+					if (p.getPlayer() == 0) {
+						m_paintPieces.setColor(Color.BLUE);
+					} else {
+						m_paintPieces.setColor(Color.RED);
+					}
+
+					Coordinate pos = new Coordinate(i1 + 1, i2 + 1);
+					CellBounds bounds = getCellBounds(pos);
+
+					this.mypaint = new Paint();
+					mypaint.setColor(Color.RED);
+					mypaint.setAntiAlias(true);
+					mypaint.setFilterBitmap(true);
+					mypaint.setDither(true);
+
+					Bitmap bitmap;
+					bitmap = BitmapFactory.decodeResource(getResources(), getImage(p));
+					Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, m_cellSize, m_cellSize, true);
+
+					canvas.drawBitmap(scaledBitmap, bounds.getLeft() - m_cellSize * 0.01f, bounds.getBottom() - m_cellSize, mypaint);
+
+					//canvas.drawText(p.getString(), bounds.getLeft() + m_cellSize * 0.5f, bounds.getBottom() - m_cellSize * 0.4f, m_paintPieces);
+				}
 			}
-			else{
-				m_paintPieces.setColor(Color.RED);
-			}
-
-			Coordinate pos = p.getPosition();
-			CellBounds bounds = getCellBounds(pos);
-
-            this.mypaint=new Paint();
-            mypaint.setColor(Color.RED);
-            mypaint.setAntiAlias(true);
-            mypaint.setFilterBitmap(true);
-            mypaint.setDither(true);
-
-            Bitmap bitmap;
-            bitmap=BitmapFactory.decodeResource(getResources(), p.getImage());
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, m_cellSize, m_cellSize, true);
-
-            canvas.drawBitmap(scaledBitmap, bounds.getLeft() - m_cellSize *0.01f, bounds.getBottom() - m_cellSize, mypaint);
-
-            //canvas.drawText(p.getString(), bounds.getLeft() + m_cellSize * 0.5f, bounds.getBottom() - m_cellSize * 0.4f, m_paintPieces);
 		}
 	}
 
@@ -264,47 +282,35 @@ public class Board extends View {
 		int y = (int) event.getY();
 
 		Coordinate c = getCoordinate(x, y);
+		System.out.println("Pressed: " + c);
 		if (c != null) {
-			GameStatus oldStatus = gameState.getGameStatus();
-			GameStatus currentStatus = oldStatus;
-			Piece thePiece = gameState.getPiece(c);
-			Coordinate oldPosition = null;
-			if(currentPiece != null){
-				oldPosition = new Coordinate(currentPiece.getPosition());
-			}
-			if(thePiece != null) {
-				System.out.println(thePiece);
-				if(gameState.playerTurn(thePiece.getPlayer())) {
-					//The user picked one of his own pieces
-					currentPiece = thePiece;
-					currentMoveOptions = thePiece.getMoveOptions();
+			Coordinate oldPosition = this.currentPieceCoordinate;
+			int oldPlayerToMove = chessState.getPlayerToMove();
+
+			//TODO: Figure out how moves are created
+			if(oldPosition != null){
+				String moveString = oldPosition.toString() + c.toString();
+				//d1d2
+				game.Move theMove = chessState.strToMove(moveString);
+				if(theMove != null) {
+					chessState.make(theMove, null);
+				}
+				if(oldPlayerToMove != chessState.getPlayerToMove()){
+					//A move was made
+					this.lastMoveStart = oldPosition;
+					this.lastMoveEnd = c;
+					PlayActivity activity = (PlayActivity)getContext();
+					activity.newTurn();
+
+					currentPieceCoordinate = null;
 				}
 				else{
-					//The user picked one of his opponent's pieces
-					if(currentPiece != null){
-						currentStatus = gameState.movePiece(currentPiece.getPosition(), c);
-					}
+					//No move was made
+					currentPieceCoordinate = c;
 				}
 			}
 			else{
-				//The user picked an empty cell
-				if(currentPiece != null){
-					//Move the piece
-					currentStatus = gameState.movePiece(currentPiece.getPosition(), c);
-				}
-
-			}
-
-			if(oldStatus != currentStatus){
-				//A move was made
-				if(currentStatus != null) {
-					this.lastMoveStart = oldPosition;
-					this.lastMoveEnd = currentPiece.getPosition();
-                    PlayActivity activity = (PlayActivity)getContext();
-                    activity.newTurn();
-
-				}
-				currentPiece = null;
+				currentPieceCoordinate = c;
 			}
 		}
 		invalidate();
@@ -402,10 +408,8 @@ public class Board extends View {
 	}
 
 	public void reset(){
-		this.currentMoveOptions = null;
-		this.currentPiece = null;
-		this.gameState.reset();
-		this.gameState = GameState.getInstance();
+		this.currentPieceCoordinate = null;
+		this.chessState.reset();
 		invalidate();
 	}
 
@@ -415,5 +419,44 @@ public class Board extends View {
     }
 
     public boolean getFinished(){ return this.finished;}
+
+	public int getImage(game.Piece thePiece){
+		//TODO: Implement
+		//White
+		if(thePiece.getPlayer() == 0){
+			switch(ChessState.Piecetype.values()[thePiece.getType()]){
+				case King:
+					return R.drawable.chessklt60;
+				case Queen:
+					return R.drawable.chessqlt60;
+				case Rook:
+					return R.drawable.chessrlt60;
+				case Knight:
+					return R.drawable.chessnlt60;
+				case Bishop:
+					return R.drawable.chessblt60;
+				case Pawn:
+					return R.drawable.chessplt60;
+			}
+		}
+		//Black
+		else{
+			switch(ChessState.Piecetype.values()[thePiece.getType()]){
+				case King:
+					return R.drawable.chesskdt60;
+				case Queen:
+					return R.drawable.chessqdt60;
+				case Rook:
+					return R.drawable.chessrdt60;
+				case Knight:
+					return R.drawable.chessndt60;
+				case Bishop:
+					return R.drawable.chessbdt60;
+				case Pawn:
+					return R.drawable.chesspdt60;
+			}
+		}
+		return R.drawable.ic_launcher;
+	}
 
 }
