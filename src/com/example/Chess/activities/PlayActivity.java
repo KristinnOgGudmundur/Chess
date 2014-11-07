@@ -2,9 +2,7 @@ package com.example.Chess.activities;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -16,10 +14,8 @@ import com.example.Chess.R;
 import com.example.Chess.database.BoardAdapter;
 import com.example.Chess.objects.Board;
 import com.example.Chess.objects.LineNumberOption;
-import com.example.Chess.objects.Player;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-
 import java.math.BigDecimal;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -68,6 +64,7 @@ public class PlayActivity extends Activity{
                             String boardState = theBoard.getGameState();
                             System.out.println(boardState);
                             long success = -2;
+                            //save game to database
                             if (!(input.getText().toString().equals(""))) {
                                 success = ba.insertBoard(input.getText().toString(), boardState, p1time, p2time, turn, gameFinished);
                             }
