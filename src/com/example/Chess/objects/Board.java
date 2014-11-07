@@ -154,8 +154,10 @@ public class Board extends View {
 				MoveOption m = null;
 
 				//TODO: Figure out how to get the start position from theMove
-				if(chessState.sqrToStr(theMove.getFrom()).equals(currentPieceCoordinate)){
-					m = new MoveOption(theMove);
+				System.out.println("sqrToStr: " + chessState.sqrToStr(theMove.getFrom()));
+				if(currentPieceCoordinate.equals(chessState.sqrToStr(theMove.getFrom()))){
+					System.out.println("Found a status");
+					m = new MoveOption(chessState, theMove);
 				}
 
 				if(m != null) {
@@ -293,7 +295,6 @@ public class Board extends View {
 			Coordinate oldPosition = this.currentPieceCoordinate;
 			int oldPlayerToMove = chessState.getPlayerToMove();
 
-			//TODO: Figure out how moves are created
 			if(oldPosition != null){
 				String moveString = oldPosition.toString() + c.toString();
 				//d1d2
@@ -427,7 +428,6 @@ public class Board extends View {
     public boolean getFinished(){ return this.finished;}
 
 	public int getImage(game.Piece thePiece){
-		//TODO: Implement
 		//White
 		if(thePiece.getPlayer() == 0){
 			switch(ChessState.Piecetype.values()[thePiece.getType()]){

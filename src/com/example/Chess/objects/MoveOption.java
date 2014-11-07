@@ -1,5 +1,8 @@
 package com.example.Chess.objects;
 
+import com.example.Chess.ch.ChessMove;
+import com.example.Chess.ch.ChessState;
+
 /**
  * Created by Gvendur Stefáns on 8.10.2014.
  */
@@ -12,8 +15,10 @@ public class MoveOption {
 		this.moveStatus = status;
 	}
 
-	public MoveOption(game.Move theMove){
+	public MoveOption(ChessState state, ChessMove theMove){
 		//TODO: Implement
+		this.coordinate = new Coordinate(state.sqrToStr(theMove.getTo()));
+		this.moveStatus = MoveStatus.CANMOVE;
 	}
 
 	@Override

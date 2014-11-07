@@ -17,6 +17,12 @@ public class Coordinate {
 		row = other.getRow();
 	}
 
+	public Coordinate(String str){
+		System.out.println("The string is: " + str + ": " + Character.toString(str.charAt(0)) + "," + Character.toString(str.charAt(1)));
+		row = Integer.parseInt(Character.toString(str.charAt(1)));
+		col = charToNumber(Character.toString(str.charAt(0)));
+	}
+
 	public int getCol(){
 		return col;
 	}
@@ -70,6 +76,36 @@ public class Coordinate {
 				throw new RuntimeException("Illegal coordinate");
 		}
 
+	}
+
+	private int charToNumber(String character){
+		if(character.equals("a")){
+			return 1;
+		}
+		else if(character.equals("b")){
+			return 2;
+		}
+		else if(character.equals("c")){
+			return 3;
+		}
+		else if(character.equals("d")){
+			return 4;
+		}
+		else if(character.equals("e")){
+			return 5;
+		}
+		else if(character.equals("f")){
+			return 6;
+		}
+		else if(character.equals("g")){
+			return 7;
+		}
+		else if(character.equals("h")){
+			return 8;
+		}
+		else{
+			throw new RuntimeException("Illegal coordinate: \"" + character + "\"");
+		}
 	}
 
 	@Override
