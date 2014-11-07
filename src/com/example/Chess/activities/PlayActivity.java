@@ -436,7 +436,7 @@ public class PlayActivity extends Activity{
 		if (winner != 0) {
             TextView timer = (TextView) findViewById(R.id.player1);
             theBoard.finished();
-            finishedDialog.setMessage("White won the game \nTime left: " + parser(p2TimeLeft));
+            finishedDialog.setMessage("White won the game \nTime left: " + parser(p1TimeLeft));
             finishedDialog.show();
             if(timerTask != null)
             {
