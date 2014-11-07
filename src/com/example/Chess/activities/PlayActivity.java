@@ -130,19 +130,19 @@ public class PlayActivity extends Activity{
         //Construct our finished dialog
 
         finishedDialog = new AlertDialog.Builder(this);
-        finishedDialog.setCancelable(true);
-        finishedDialog.setPositiveButton(R.string.back,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                    }
-                });
-        finishedDialog.setNegativeButton(R.string.cancel,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
+		finishedDialog.setCancelable(true);
+		finishedDialog.setPositiveButton(R.string.mainMenu,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						finish();
+					}
+				});
+		finishedDialog.setNegativeButton(R.string.cancel,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
 
 
         //Check if this is a new game or an existing game
@@ -404,6 +404,7 @@ public class PlayActivity extends Activity{
             }
         }
     }
+
 
     public void playerwon(int winner) {
         if (winner != 0) {

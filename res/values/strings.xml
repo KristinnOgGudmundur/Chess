@@ -4,9 +4,17 @@
 	<string name="buttonPlay">Play</string>
 	<string name="buttonOptions">Options</string>
 
+	<string name="mainMenu">Main menu</string>
     <string name="back">Back</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+
+	<string name="promote">Promotion</string>
+	<string name="promoteQueen">Queen</string>
+	<string name="promoteKnight">Knight</string>
+	<string name="promoteRook">Rook</string>
+	<string name="promoteBishop">Bishop</string>
+
     <string name="optionReset">Reset</string>
     <string name="optionResetDetails">Delete all saved games</string>
     <string name="confirm">Are you sure?</string>

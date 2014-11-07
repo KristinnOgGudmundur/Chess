@@ -1,4 +1,4 @@
-package com.example.Chess.ch;
+package com.example.Chess.objects;
 
 import game.Board;
 import game.Move;
