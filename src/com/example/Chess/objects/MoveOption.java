@@ -12,6 +12,10 @@ public class MoveOption {
 		this.moveStatus = status;
 	}
 
+	public MoveOption(game.Move theMove){
+		//TODO: Implement
+	}
+
 	@Override
 	public boolean equals(Object other){
 		if(other.getClass() == MoveOption.class){

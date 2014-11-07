@@ -36,11 +36,14 @@ public class Coordinate {
 
 	@Override
 	public boolean equals(Object other){
-		if(other.getClass() != Coordinate.class){
-			return false;
+		if(other.getClass() == Coordinate.class){
+			return ((Coordinate)other).getCol() == this.col && ((Coordinate)other).getRow() == this.row;
+		}
+		else if(other instanceof String){
+			return ((String)other).equals(this.toString());
 		}
 		else{
-			return ((Coordinate)other).getCol() == this.col && ((Coordinate)other).getRow() == this.row;
+			return false;
 		}
 	}
 
