@@ -25,6 +25,7 @@ public class OptionsActivity extends PreferenceActivity {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.options);
 
+        //hide some preference that we use as temp storage
         EditTextPreference pref = (EditTextPreference) findPreference("tempTime");
         EditTextPreference pref2 = (EditTextPreference) findPreference("tempTime2");
         CheckBoxPreference pref3 = (CheckBoxPreference) findPreference("playerTurn");
@@ -42,6 +43,7 @@ public class OptionsActivity extends PreferenceActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
+                        //drop table and create a fresh one
                         mSA.drop();
                         mSA.create();
                         dialog.cancel();
