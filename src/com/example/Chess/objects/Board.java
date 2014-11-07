@@ -75,7 +75,7 @@ public class Board extends View implements PopupMenu.OnMenuItemClickListener{
     {
         //chessState.setup(board);
         moves = new ArrayList<String>();
-		chessState.reset();
+		chessState = new ChessState();
 		for(int i = 0; i < board.length(); i += 4){
 			game.Move theMove = chessState.strToMove(board.substring(i, i + 4));
 			chessState.make(theMove, null);
@@ -584,7 +584,7 @@ public class Board extends View implements PopupMenu.OnMenuItemClickListener{
 		if(!moves.isEmpty()) {
 			this.moves.remove(this.moves.size() - 1);
 
-			this.chessState.reset();
+			this.chessState = new ChessState();
 			if (!moves.isEmpty()) {
 				for (String s : moves) {
 					game.Move theMove = chessState.strToMove(s);
